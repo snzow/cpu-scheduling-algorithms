@@ -1,12 +1,19 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
+import schedulers.*;
 import utilities.Process;
 
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Process> processes = new ArrayList<>();
+        List<Process> processes = new ArrayList<>();
         loadProcesses(processes);
+
+        FCFS fcfs = new FCFS();
+        fcfs.loadProcesses(processes);
+
 
     }
 
@@ -16,7 +23,7 @@ public class Main {
      * @param processes the collection of processes to be loaded
      *                  with the data
      */
-    private static void loadProcesses(ArrayList<Process> processes) {
+    private static void loadProcesses(List<Process> processes) {
         Process p1 = new Process("P1", Arrays.asList(5, 27, 3, 31, 5, 43, 4, 18, 6, 22, 4, 26, 3, 24, 4));
         Process p2 = new Process("P2", Arrays.asList(4, 48, 5, 44, 7, 42, 12, 37, 9, 76, 4, 41, 9, 31, 7, 43, 8));
         Process p3 = new Process("P3", Arrays.asList(8, 33, 12, 41, 18, 65, 14, 21, 4, 61, 15, 18, 14, 26, 5, 31, 6));
