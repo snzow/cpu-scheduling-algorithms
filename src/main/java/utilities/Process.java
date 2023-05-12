@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Process {
 
+
+
     /**
      * The name of the process
      */
@@ -20,6 +22,15 @@ public class Process {
      * I/O time,…….., last CPU burst
      */
     private List<Integer> traceTape;
+
+    /**
+     * stores the current state of the process
+     */
+    public enum state{
+        IO,
+        BURST
+    };
+
     /**
      * Total CPU burst time measured in the trace tape
      */
