@@ -7,14 +7,15 @@ import utilities.Process;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         List<Process> processes = new ArrayList<>();
         loadProcesses(processes);
 
-        FCFS fcfs = new FCFS();
-        fcfs.loadProcesses(processes);
-
-
+        // SAMPLE
+        SJF sjf = new SJF();
+        sjf.loadProcesses(processes);
+        sjf.executeProcesses(false);
+        System.out.println(sjf.generatePerformanceMetrics().toString());
     }
 
     /**

@@ -40,6 +40,11 @@ public class SJF implements SchedulerInterface {
 
         // YOUR ALGORITHM HERE :)
 
+        for (Process process : processes) {
+            process.setExitTime(10);
+            process.setStartTime(5);
+        }
+
         this.processesExecuted = true;
     }
 
