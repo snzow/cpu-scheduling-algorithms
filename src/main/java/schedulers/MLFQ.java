@@ -37,12 +37,9 @@ public class MLFQ implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) {
-        float startTime = System.currentTimeMillis();
 
         // YOUR ALGORITHM HERE :)
 
-        float endTime = System.currentTimeMillis();
-        this.totalExecutionTime = endTime - startTime;
         this.processesExecuted = true;
     }
 
@@ -54,6 +51,6 @@ public class MLFQ implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes, totalExecutionTime);
+        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes);
     }
 }

@@ -29,6 +29,10 @@ public class Process {
      */
     private int totalIOTime;
     /**
+     * Total time required for process execution
+     */
+    private int totalTime;
+    /**
      * Priority level of the process, if applicable
      * Initializes to 0
      */
@@ -94,6 +98,7 @@ public class Process {
                 this.totalIOTime += traceTape.get(i);
             }
         }
+        this.totalTime = totalCPUBurstTime + totalIOTime;
     }
 
 
@@ -138,6 +143,14 @@ public class Process {
      */
     public int getTotalIOTime() {
         return totalIOTime;
+    }
+
+    /**
+     * Retrieves the total time for process execution
+     * @return total process time
+     */
+    public int getTotalTime() {
+        return totalTime;
     }
 
     /**
