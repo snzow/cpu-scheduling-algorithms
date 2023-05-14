@@ -6,13 +6,18 @@ import java.util.List;
  * Simulated Process class, providing data storage, access, and calculations
  * of a simulated process, given its trace tape
  * @author Nick Trimmer
+ * @author Aodhan Bower
  */
 public class Process {
+
+
 
     /**
      * The name of the process
      */
     private final String processName;
+    
+    
     /**
      * Stores CPU bursts mixed with IO times.
      * Structured as:
@@ -20,14 +25,25 @@ public class Process {
      * I/O time,…….., last CPU burst
      */
     private List<Integer> traceTape;
+
+    /**
+     * Tracks the distance through the tape the process has gotten
+     */
+    private int tapeCursor;
+    
     /**
      * Total CPU burst time measured in the trace tape
      */
+    
+    private int activeProcess;
+    private boolean complete;
     private int totalCPUBurstTime;
+    
     /**
      * Total IO time measured in the trace tape
      */
     private int totalIOTime;
+    
     /**
      * Total time required for process execution
      */
@@ -43,11 +59,13 @@ public class Process {
      */
     private int arrivalTime;
     private Boolean arrivalUpdated;
+    
     /**
      * Time when the CPU begins the process
      */
     private int startTime;
     private Boolean startUpdated;
+    
     /**
      * The point when the CPU finishes the process
      */
@@ -59,11 +77,13 @@ public class Process {
      * to a request by the process
      */
     private int responseTime;
+    
     /**
      * The total time the process spent in the ready state
      * waiting for the CPU
      */
     private int waitingTime;
+    
     /**
      * The time elapsed between the arrival of the process
      * and its completion
@@ -79,7 +99,10 @@ public class Process {
     public Process(String processName, List<Integer> traceTape) {
         this.processName = processName;
         this.traceTape = traceTape;
+        this.tapeCursor = 0;
+        this.activeProcess = traceTape.get(0);
         this.priority = 0;
+        this.complete = false;
         this.arrivalUpdated = false;
         this.startUpdated = false;
         this.exitUpdated = false;
@@ -101,6 +124,44 @@ public class Process {
         this.totalTime = totalCPUBurstTime + totalIOTime;
     }
 
+    /**
+     * Progresses the tape cursor to signify that the most recent item has been completed.
+     * updates the activeProcess to the new item
+     * @return true if there is another item, false if the process is complete.
+     */
+    public boolean nextTapeItem(){
+        if(tapeCursor + 1 == traceTape.size()){
+            complete = true;
+            return false;
+        }
+        else{
+            activeProcess = traceTape.get(++tapeCursor);
+            return true;
+        }
+    }
+
+    /**
+     * Lowers the value of the active process by 1
+     * continues to the next item if it reaches 0
+     * @return true if the current item is finished, false if not
+     */
+    public boolean decrementActiveProcess(){
+        if(--activeProcess == 0){
+           nextTapeItem();
+           return true;
+        }
+        return false;
+
+    }
+
+    public boolean getCompletion(){
+        return complete;
+    }
+    
+    public int getActiveProcessTimeRemaining(){
+        return activeProcess;
+    }
+
 
 
     /**
@@ -116,7 +177,7 @@ public class Process {
      * @return the process trace tape
      */
     public List<Integer> getTraceTape() {
-        return traceTape;
+        return List.copyOf(traceTape);
     }
 
     /**

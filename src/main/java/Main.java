@@ -3,6 +3,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import schedulers.*;
+import utilities.Cpu;
+import utilities.CpuInterface;
 import utilities.Process;
 
 public class Main {
@@ -60,5 +62,38 @@ public class Main {
         processes.add(p6);
         processes.add(p7);
         processes.add(p8);
+
+        /*CpuInterface testCpu = new Cpu();
+        for(Process p : processes){
+            testCpu.addProcess(p);
+        }
+        testCpu.sendToCpuIfEmpty(p1);
+        while(!testCpu.cpuTick()){
+        }
+        testCpu.sendToCpuIfEmpty(p2);
+        while(!testCpu.cpuTick()){
+        }
+        testCpu.cpuTick();
+        testCpu.cpuTick();
+        testCpu.cpuTick();
+        testCpu.cpuTick();
+        testCpu.sendToCpuIfEmpty(p3);
+        testCpu.cpuTick();
+        testCpu.cpuTick();
+        testCpu.cpuTick();
+        testCpu.preemptOnCpu(p4);
+        while(!testCpu.cpuTick()){
+
+        }
+        while(testCpu.getIoProcesses().contains(p1)){
+            testCpu.cpuTick();
+        }
+        testCpu.cpuTick();
+        testCpu.sendToCpuIfEmpty(p6);
+
+         */
+
+
     }
+
 }
