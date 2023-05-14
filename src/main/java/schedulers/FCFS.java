@@ -5,7 +5,6 @@ import java.util.List;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
-
 /**
  * First-Come First Served CPU Scheduling Algorithm
  * @author Joette Damo
@@ -38,12 +37,9 @@ public class FCFS implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) {
-        float startTime = System.currentTimeMillis();
 
         // YOUR ALGORITHM HERE :)
 
-        float endTime = System.currentTimeMillis();
-        this.totalExecutionTime = endTime - startTime;
         this.processesExecuted = true;
     }
 
@@ -55,6 +51,6 @@ public class FCFS implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("First Come First Served", processes, totalExecutionTime);
+        return new PerformanceMetricGenerator("First Come First Served", processes);
     }
 }

@@ -37,12 +37,9 @@ public class Priority implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) {
-        float startTime = System.currentTimeMillis();
 
         // YOUR ALGORITHM HERE :)
 
-        float endTime = System.currentTimeMillis();
-        this.totalExecutionTime = endTime - startTime;
         this.processesExecuted = true;
     }
 
@@ -54,6 +51,6 @@ public class Priority implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Priority", processes, totalExecutionTime);
+        return new PerformanceMetricGenerator("Priority", processes);
     }
 }
