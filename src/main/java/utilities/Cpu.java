@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.*;
 
+
 public class Cpu implements CpuInterface {
     private List<Process> ioProcesses;
     private Process onCpu;
@@ -51,7 +52,7 @@ public class Cpu implements CpuInterface {
     }
 
 
-    public void cpuTick(){
+    public boolean cpuTick(){
         time++;
         if(onCpu != null){
             useTime++;
@@ -62,22 +63,23 @@ public class Cpu implements CpuInterface {
                 else{
                     ioProcesses.add(onCpu);
                 }
-                printSnapshot();
+                onCpu = null;
+                printSnapshot("Process on cpu complete!");
+                return true;
             }
         }
-        for(Process p : ioProcesses){
-            if(p.decrementActiveProcess()){
-                if(p.getCompletion()){
-                    completedProcesses.add(p);
+        for(int i = 0; i < ioProcesses.size(); i++){
+            if(ioProcesses.get(i).decrementActiveProcess()){
+                if(ioProcesses.get(i).getCompletion()){
+                    completedProcesses.add(ioProcesses.get(i));
                 }
                 else{
-                    readyProcesses.add(p);
-                    ioProcesses.remove(p);
+                    readyProcesses.add(ioProcesses.get(i));
+                    ioProcesses.remove(ioProcesses.get(i));
                 }
             }
         }
-
-
+        return false;
     }
 
     public void sendToCpuIfEmpty(Process process){
@@ -85,6 +87,8 @@ public class Cpu implements CpuInterface {
         }
         else{
             onCpu = process;
+            readyProcesses.remove(process);
+            printSnapshot("Process added to cpu!");
         }
     }
 
@@ -92,11 +96,14 @@ public class Cpu implements CpuInterface {
         readyProcesses.add(onCpu);
         onCpu = process;
         readyProcesses.remove(process);
-        printSnapshot();
+        printSnapshot("Process Preempted from cpu!");
     }
 
-    private void printSnapshot(){
+    private void printSnapshot(String title){
         System.out.println("---------------");
+        System.out.println(title);
+        System.out.println("Time Elapsed: " + time);
+        System.out.println("CPU Utilization: " + useTime + "/" + time);
         System.out.print("Process On Cpu: ");
         if (onCpu != null) {
             System.out.println(getOnCpu().getProcessName());
@@ -105,12 +112,12 @@ public class Cpu implements CpuInterface {
             System.out.println("None");
         }
         System.out.println("---------------");
-        System.out.println("--IO Processes (Time Remaining)--");
+        System.out.println("IO Processes (Time Remaining)");
         for(Process p : getIoProcesses()){
-            System.out.println(p.getProcessName() + " (" + p.getActiveProcessTimeRemaining());
+            System.out.println(p.getProcessName() + " (" + p.getActiveProcessTimeRemaining() + ")");
         }
         System.out.println("---------------");
-        System.out.println("--Waiting Processes--");
+        System.out.println("Waiting Processes");
         for(Process p : getReadyProcesses()){
             System.out.println(p.getProcessName());
         }

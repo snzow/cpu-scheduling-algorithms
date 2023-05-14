@@ -45,8 +45,9 @@ public interface CpuInterface {
      * decrements all io processes and any cpu burst by 1
      * moves cpu process to io if the burst is complete
      * also moves any fully completed processes out of io.
+     * @return true if the cpu process finished this tick, false otherwise
      */
-    public void cpuTick();
+    public boolean cpuTick();
 
     /**
      * puts the process on the cpu if it is available,
