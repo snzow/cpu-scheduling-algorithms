@@ -26,7 +26,7 @@ public class Cpu implements CpuInterface {
 
     }
 
-    public Process getOnCpu() {
+    public Process getOnCpu(){
         return onCpu;
     }
 
@@ -62,6 +62,7 @@ public class Cpu implements CpuInterface {
                 else{
                     ioProcesses.add(onCpu);
                 }
+                printSnapshot();
             }
         }
         for(Process p : ioProcesses){
@@ -91,6 +92,29 @@ public class Cpu implements CpuInterface {
         readyProcesses.add(onCpu);
         onCpu = process;
         readyProcesses.remove(process);
+        printSnapshot();
+    }
+
+    private void printSnapshot(){
+        System.out.println("---------------");
+        System.out.print("Process On Cpu: ");
+        if (onCpu != null) {
+            System.out.println(getOnCpu().getProcessName());
+        }
+        else{
+            System.out.println("None");
+        }
+        System.out.println("---------------");
+        System.out.println("--IO Processes (Time Remaining)--");
+        for(Process p : getIoProcesses()){
+            System.out.println(p.getProcessName() + " (" + p.getActiveProcessTimeRemaining());
+        }
+        System.out.println("---------------");
+        System.out.println("--Waiting Processes--");
+        for(Process p : getReadyProcesses()){
+            System.out.println(p.getProcessName());
+        }
+        System.out.println("---------------");
     }
 
 }

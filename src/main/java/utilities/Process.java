@@ -140,6 +140,11 @@ public class Process {
         }
     }
 
+    /**
+     * Lowers the value of the active process by 1
+     * continues to the next item if it reaches 0
+     * @return true if the current item is finished, false if not
+     */
     public boolean decrementActiveProcess(){
         if(--activeProcess == 0){
            nextTapeItem();
@@ -153,7 +158,9 @@ public class Process {
         return complete;
     }
     
-    
+    public int getActiveProcessTimeRemaining(){
+        return activeProcess;
+    }
 
 
 
