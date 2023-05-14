@@ -165,7 +165,7 @@ public class Process {
      * @return the process trace tape
      */
     public List<Integer> getTraceTape() {
-        return traceTape;
+        return List.copyOf(traceTape);
     }
 
     /**

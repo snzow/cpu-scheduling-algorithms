@@ -49,6 +49,13 @@ public interface CpuInterface {
     public void cpuTick();
 
     /**
+     * puts the process on the cpu if it is available,
+     * but will not preempt anyhting already on it
+     * @param process the process to add to the cpu
+     */
+    public void sendToCpuIfEmpty(Process process);
+
+    /**
      * moves the current cpu process back to ready, replaces it with process
      * @param process the process to put on the cpu
      */

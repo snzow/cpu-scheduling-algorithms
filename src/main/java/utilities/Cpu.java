@@ -79,14 +79,18 @@ public class Cpu implements CpuInterface {
 
     }
 
+    public void sendToCpuIfEmpty(Process process){
+        if(onCpu != null){
+        }
+        else{
+            onCpu = process;
+        }
+    }
+
     public void preemptOnCpu(Process process){
         readyProcesses.add(onCpu);
         onCpu = process;
         readyProcesses.remove(process);
     }
-
-
-
-
 
 }
