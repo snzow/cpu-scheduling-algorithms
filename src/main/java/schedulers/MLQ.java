@@ -66,8 +66,12 @@ public class MLQ implements SchedulerInterface {
 
         // YOUR ALGORITHM HERE :)
 
-
-        this.cpu = new Cpu(true);
+        if(contextStream){
+            this.cpu = new Cpu(true);
+        }
+        else{
+            this.cpu = new Cpu();
+        }
         HashMap<Process, List<Process>> processListMap = new HashMap<>();
         for(Process p : foreground){
             cpu.addProcess(p);
