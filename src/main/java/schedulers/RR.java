@@ -1,7 +1,10 @@
 package schedulers;
 
 import java.util.*;
+import java.util.List;
+import java.util.Queue;
 
+import utilities.Cpu;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
@@ -44,10 +47,14 @@ public class RR implements SchedulerInterface {
         for (int i = 0; i < size; i++) {
             remainingTime[i] = processes.get(i).getTotalCPUBurstTime();
         }
+
         int quantum = 5;
+        Cpu cpu = new Cpu();
+
         Queue<Process> processQueue = new LinkedList<>(processes);
         int time = 0;
-        while (!processQueue.isEmpty()) {
+        int completedProcesses = 0;
+        while (completedProcesses < size) {
             Process process = processQueue.poll();
             int index = processes.indexOf(process);
 
@@ -58,12 +65,17 @@ public class RR implements SchedulerInterface {
                     processQueue.offer(process);
                 } else {
                     time += remainingTime[index];
-                    waitingTime[index] = time - process.getTotalCPUBurstTime();
+                    waitingTime[index]   = time - process.getTotalCPUBurstTime();
                     remainingTime[index] = 0;
+                    completedProcesses++;
                 }
+
+            }
+            cpu.sendToCpuIfEmpty(process);
+            while (!cpu.cpuTick()) {
+
             }
         }
-
         this.processesExecuted = true;
     }
 
