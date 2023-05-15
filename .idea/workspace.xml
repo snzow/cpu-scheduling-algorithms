@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="RR algorithm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/CpuInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/CpuInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +73,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="CPUScheduler_Stub.main" />
+      <module name="cpu-scheduling-algorithms" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -115,10 +120,24 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="RR algorithm" />
     <option name="LAST_COMMIT_MESSAGE" value="RR algorithm" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/schedulers/MLQ.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NullPointerException" package="java.lang" />
+          <option name="timeStamp" value="6" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -63,6 +63,19 @@ public class Main {
         processes.add(p7);
         processes.add(p8);
 
+        ArrayList<Process> foreground = new ArrayList<>();
+        ArrayList<Process> background = new ArrayList<>();
+        foreground.add(p1);
+        foreground.add(p2);
+        foreground.add(p3);
+        foreground.add(p4);
+        background.add(p5);
+        background.add(p6);
+        background.add(p7);
+        background.add(p8);
+        MLQ mlq = new MLQ(foreground,background,5   );
+        mlq.executeProcesses(true);
+
         /*CpuInterface testCpu = new Cpu();
         for(Process p : processes){
             testCpu.addProcess(p);
