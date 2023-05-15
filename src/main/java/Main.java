@@ -46,7 +46,6 @@ public class Main {
 //        System.out.println(fcfs.generatePerformanceMetrics().toString());
 //        System.out.println();
 //        resetProcess(processes);
->>>>>>> 3bb2eceed33d29e84c4caa323ca3c67f49da2f24
     }
 
     /**
