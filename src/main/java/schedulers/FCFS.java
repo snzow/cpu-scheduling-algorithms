@@ -39,7 +39,7 @@ public class FCFS implements SchedulerInterface {
     public void executeProcesses(Boolean contextStream) {
 
         // YOUR ALGORITHM HERE :)
-        List<Row> processes = Utility.deepCopy(process);
+     /*   List<Process> processes = Utility.deepCopy(process);
         Utility.sortArrival(processes);
         int timeline = 0;
         double avg_waiting = 0;
@@ -59,16 +59,20 @@ public class FCFS implements SchedulerInterface {
         
 
         this.processesExecuted = true;
+
+      */
     }
 
-    /**
-     * @inheritDoc
-     */
-    @Override
-    public PerformanceMetricGenerator generatePerformanceMetrics() throws Exception {
-        if (!processesExecuted) {
-            throw new Exception("Must complete processes before generating metrics");
+
+        /**
+         * @inheritDoc
+         */
+        @Override
+        public PerformanceMetricGenerator generatePerformanceMetrics() throws Exception {
+            if (!processesExecuted) {
+                throw new Exception("Must complete processes before generating metrics");
+            }
+            return new PerformanceMetricGenerator("Multilevel Queue", processes);
         }
-        return new PerformanceMetricGenerator("First Come First Served", processes);
+
     }
-}

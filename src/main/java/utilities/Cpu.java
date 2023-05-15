@@ -15,6 +15,8 @@ public class Cpu implements CpuInterface {
 
     private boolean inUse;
 
+    private boolean printInfo;
+
 
     public Cpu(){
         this.ioProcesses = new ArrayList<>();
@@ -24,7 +26,23 @@ public class Cpu implements CpuInterface {
         this.inUse = false;
         this.useTime = 0;
         this.time = 0;
+        this.printInfo = false;
+    }
 
+    public Cpu(boolean printInfo){
+        this.ioProcesses = new ArrayList<>();
+        this.onCpu = null;
+        this.readyProcesses = new ArrayList<>();
+        this.completedProcesses = new ArrayList<>();
+        this.inUse = false;
+        this.useTime = 0;
+        this.time = 0;
+        this.printInfo = printInfo;
+
+    }
+
+    public int getTime(){
+        return time;
     }
 
     public Process getOnCpu(){
@@ -51,6 +69,23 @@ public class Cpu implements CpuInterface {
         }
     }
 
+    public void setProcessList(List<Process> processes){
+        readyProcesses = processes;
+    }
+
+    public boolean idle(){
+        return onCpu == null;
+    }
+
+    public boolean checkCompletion(){
+        if(readyProcesses.size() == 0 && ioProcesses.size() == 0 && onCpu == null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 
     public boolean cpuTick(){
         time++;
@@ -64,7 +99,9 @@ public class Cpu implements CpuInterface {
                     ioProcesses.add(onCpu);
                 }
                 onCpu = null;
-                printSnapshot("Process on cpu complete!");
+                if(printInfo){
+                    printSnapshot("Process on cpu complete!");
+                }
                 return true;
             }
         }
@@ -82,21 +119,27 @@ public class Cpu implements CpuInterface {
         return false;
     }
 
-    public void sendToCpuIfEmpty(Process process){
-        if(onCpu != null){
-        }
-        else{
+    public boolean sendToCpuIfEmpty(Process process){
+        if(idle()){
             onCpu = process;
             readyProcesses.remove(process);
-            printSnapshot("Process added to cpu!");
+            if(printInfo){
+                printSnapshot("Process added to cpu!");
+            }
+            return true;
         }
+        return false;
     }
 
     public void preemptOnCpu(Process process){
-        readyProcesses.add(onCpu);
+        if(!idle()){
+            readyProcesses.add(onCpu);
+        }
         onCpu = process;
         readyProcesses.remove(process);
-        printSnapshot("Process Preempted from cpu!");
+        if(printInfo){
+            printSnapshot("Process preempted from cpu!");
+        }
     }
 
     private void printSnapshot(String title){
@@ -117,8 +160,15 @@ public class Cpu implements CpuInterface {
             System.out.println(p.getProcessName() + " (" + p.getActiveProcessTimeRemaining() + ")");
         }
         System.out.println("---------------");
-        System.out.println("Waiting Processes");
-        for(Process p : getReadyProcesses()){
+        if(readyProcesses.size() > 0){
+            System.out.println("Waiting Processes");
+            for(Process p : readyProcesses){
+                System.out.println(p.getProcessName());
+            }
+            System.out.println("---------------");
+        }
+        System.out.println("Completed Processes");
+        for(Process p : completedProcesses){
             System.out.println(p.getProcessName());
         }
         System.out.println("---------------");

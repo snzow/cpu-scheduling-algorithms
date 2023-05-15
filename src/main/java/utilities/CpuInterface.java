@@ -33,6 +33,8 @@ public interface CpuInterface {
      */
     public List<Process> getIoProcesses();
 
+    public boolean idle();
+
     /**
      *
      * @param process the process to be added
@@ -47,6 +49,10 @@ public interface CpuInterface {
      * also moves any fully completed processes out of io.
      * @return true if the cpu process finished this tick, false otherwise
      */
+
+    public void setProcessList(List<Process> processList);
+
+    public boolean checkCompletion();
     public boolean cpuTick();
 
     /**
@@ -54,13 +60,15 @@ public interface CpuInterface {
      * but will not preempt anyhting already on it
      * @param process the process to add to the cpu
      */
-    public void sendToCpuIfEmpty(Process process);
+    public boolean sendToCpuIfEmpty(Process process);
 
     /**
      * moves the current cpu process back to ready, replaces it with process
      * @param process the process to put on the cpu
      */
     public void preemptOnCpu(Process process);
+
+    public int getTime();
 
 
 }

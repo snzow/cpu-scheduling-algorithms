@@ -1,7 +1,12 @@
 package schedulers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Queue;
 
+import utilities.Cpu;
+import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
@@ -27,6 +32,18 @@ public class MLQ implements SchedulerInterface {
     /**
      * @inheritDoc
      */
+
+    private List<Process> foreground;
+    private List<Process> background;
+    private int quantum;
+
+    public MLQ(ArrayList<Process> foregroundList, ArrayList<Process> backgroundList, int quantum){
+        this.foreground = foregroundList;
+        this.background = backgroundList;
+        this.processes = new ArrayList<>();
+        this.quantum = quantum;
+
+    }
     @Override
     public void loadProcesses(List<Process> processes) {
         this.processes = processes;
@@ -40,6 +57,71 @@ public class MLQ implements SchedulerInterface {
 
         // YOUR ALGORITHM HERE :)
 
+
+        CpuInterface cpu = new Cpu(true);
+        HashMap<Process, List<Process>> processListMap = new HashMap<>();
+        for(Process p : foreground){
+            cpu.addProcess(p);
+            processListMap.put(p,foreground);
+        }
+        for(Process p : background){
+            cpu.addProcess(p);
+            processListMap.put(p,background);
+        }
+        cpu.sendToCpuIfEmpty(foreground.remove(0));
+        int quantumCount = 0;
+        while(!cpu.checkCompletion()){
+            for(int i = 0; i < 50; i++){
+                if(i < 40){
+                    cpu.cpuTick();
+                    if (foreground.size() == 0){
+                    }
+                    else if(cpu.idle()){
+                        cpu.sendToCpuIfEmpty(foreground.remove(0));
+                    }
+                    else if(quantum == quantumCount){
+                        Process temp = cpu.getOnCpu();
+                        cpu.preemptOnCpu(foreground.remove(0));
+
+                        processListMap.get(temp).add(temp);
+                    }
+                    if(quantumCount >= quantum){
+                        quantumCount = -1;
+                    }
+                    quantumCount++;
+
+                }
+                else{
+                    if(background.size() == 0){
+                        cpu.cpuTick();
+                    }
+                    else{
+                        if(i == 40){
+                            if(!cpu.idle()){
+                                Process temp = cpu.getOnCpu();
+                                processListMap.get(temp).add(temp);
+                            }
+                            cpu.preemptOnCpu(background.remove(0));
+                            cpu.cpuTick();
+                        }
+                        else{
+                            if(cpu.sendToCpuIfEmpty(background.remove(0))){
+                            }
+                            cpu.cpuTick();
+                        }
+                    }
+
+                }
+                for(Process p : cpu.getReadyProcesses()){
+                    if(!processListMap.get(p).contains(p)){
+                        processListMap.get(p).add(p);
+                    }
+
+                }
+            }
+        }
+
+        PerformanceMetricGenerator p = new PerformanceMetricGenerator("MLQ",processes);
         this.processesExecuted = true;
     }
 
@@ -53,4 +135,5 @@ public class MLQ implements SchedulerInterface {
         }
         return new PerformanceMetricGenerator("Multilevel Queue", processes);
     }
+
 }
