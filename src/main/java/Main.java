@@ -3,8 +3,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import schedulers.*;
-import utilities.Cpu;
-import utilities.CpuInterface;
 import utilities.Process;
 
 public class Main {
@@ -13,23 +11,42 @@ public class Main {
         List<Process> processes = new ArrayList<>();
         loadProcesses(processes);
 
-        // SAMPLE
+        // SHORTEST JOB FIRST (NON PREEMPTIVE)
         SJF sjf = new SJF();
         sjf.loadProcesses(processes);
         sjf.executeProcesses(false);
+        System.out.println("SHORTEST JOB FIRST:");
         System.out.println(sjf.generatePerformanceMetrics().toString());
+        System.out.println();
+        resetProcess(processes);
 
-        ArrayList<Process> foreground = new ArrayList<>();
-        ArrayList<Process> background = new ArrayList<>();
-        loadProcesses(background);
-        foreground.add(background.remove(0));
-        foreground.add(background.remove(0));
-        foreground.add(background.remove(0));
-        foreground.add(background.remove(0));
-        MLQ mlq = new MLQ(foreground,background,5   );
+        // ROUND ROBIN
+        RR rr = new RR();
+        rr.loadProcesses(processes);
+        rr.executeProcesses(false);
+        System.out.println("ROUND ROBIN:");
+        System.out.println(rr.generatePerformanceMetrics().toString());
+        System.out.println();
+        resetProcess(processes);
+
+        // MULTILEVEL QUEUE
+        ArrayList<Process> background = new ArrayList<>(processes.subList(4, processes.size()));
+        ArrayList<Process> foreground = new ArrayList<>(processes.subList(0, 4));
+        MLQ mlq = new MLQ(foreground,background,5);
         mlq.executeProcesses(false);
+        System.out.println("MULTILEVEL QUEUE:");
         System.out.println(mlq.generatePerformanceMetrics().toString());
+        resetProcess(processes);
 
+        //FIRST-COME FIRST SERVED
+//        FCFS fcfs = new FCFS();
+//        fcfs.loadProcesses(processes);
+//        fcfs.executeProcesses(false);
+//        System.out.println("FIRST-COME FIRST SERVED:");
+//        System.out.println(fcfs.generatePerformanceMetrics().toString());
+//        System.out.println();
+//        resetProcess(processes);
+>>>>>>> 3bb2eceed33d29e84c4caa323ca3c67f49da2f24
     }
 
     /**
@@ -76,9 +93,12 @@ public class Main {
         processes.add(p8);
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 3bb2eceed33d29e84c4caa323ca3c67f49da2f24
 
         /*CpuInterface testCpu = new Cpu();
         for(Process p : processes){
@@ -113,4 +133,9 @@ public class Main {
 
     }
 
+    private static void resetProcess(List<Process> processes) {
+        for (Process process : processes) {
+            process.reset();
+        }
+    }
 }
