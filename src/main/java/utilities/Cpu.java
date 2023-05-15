@@ -113,7 +113,7 @@ public class Cpu implements CpuInterface {
     }
 
 
-    public boolean cpuTick(){
+    public boolean cpuTick() throws Exception {
         time++;
         if(onCpu != null){
             useTime++;

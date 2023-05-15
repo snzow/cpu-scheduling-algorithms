@@ -372,7 +372,7 @@ public class Process {
      * waiting for the CPU
      */
     private void setWaitingTime() {
-        this.waitingTime = this.exitTime - this.arrivalTime - this.totalCPUBurstTime - this.totalIOTime;
+        this.waitingTime = this.exitTime - this.arrivalTime - this.totalCPUBurstTime;
     }
 
     /**
@@ -389,11 +389,14 @@ public class Process {
      * Resets all process metrics
      */
     public void reset() {
+        this.activeProcess = traceTape.get(0);
         this.arrivalTime = 0;
         this.responseTime = 0;
         this.waitingTime = 0;
         this.turnaroundTime = 0;
         this.exitTime = 0;
+        this.complete = false;
+        this.tapeCursor = 0;
         this.arrivalUpdated = false;
         this.exitUpdated = false;
     }

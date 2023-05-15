@@ -75,7 +75,7 @@ public interface CpuInterface {
      * also moves any fully completed processes out of io.
      * @return true if the cpu process finished this tick, false otherwise
      */
-    public boolean cpuTick();
+    public boolean cpuTick() throws Exception;
 
     /**
      * puts the process on the cpu if it is available,

@@ -2,11 +2,8 @@ package schedulers;
 
 import java.util.*;
 
-<<<<<<< HEAD
 import utilities.CpuInterface;
-=======
 import utilities.Cpu;
->>>>>>> 3bb2eceed33d29e84c4caa323ca3c67f49da2f24
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
