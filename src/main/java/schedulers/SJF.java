@@ -82,7 +82,6 @@ public class SJF implements SchedulerInterface {
         return timeDelta;
     }
 
-
     /**
      * @inheritDoc
      */
