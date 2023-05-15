@@ -121,7 +121,7 @@ public class MLQ implements SchedulerInterface {
             }
         }
 
-
+        PerformanceMetricGenerator p = new PerformanceMetricGenerator("MLQ",processes);
         this.processesExecuted = true;
     }
 
