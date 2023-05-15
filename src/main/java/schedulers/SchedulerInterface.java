@@ -22,7 +22,7 @@ public interface SchedulerInterface {
      * @param contextStream true if context stream is to be
      *                      written to a file, false if else
      */
-    void executeProcesses(Boolean contextStream);
+    void executeProcesses(Boolean contextStream) throws Exception;
 
     /**
      * Generates scheduler performance metrics for processes given
