@@ -29,6 +29,7 @@ public class Priority implements SchedulerInterface {
      */
     @Override
     public void loadProcesses(List<Process> processes) {
+
         this.processes = processes;
     }
 
