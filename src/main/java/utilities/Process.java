@@ -26,6 +26,10 @@ public class Process {
      */
     private List<Integer> traceTape;
 
+    public int getTapeCursor() {
+        return tapeCursor;
+    }
+
     /**
      * Tracks the distance through the tape the process has gotten
      */
@@ -53,6 +57,16 @@ public class Process {
      * Initializes to 0
      */
     private int priority;
+
+    public int getIoLogTime() {
+        return ioLogTime;
+    }
+
+    public void setIoLogTime(int ioLogTime) {
+        this.ioLogTime = ioLogTime;
+    }
+
+    private int ioLogTime;
 
     /**
      * Time when the process arrives at the CPU
@@ -161,7 +175,6 @@ public class Process {
     public int getActiveProcessTimeRemaining(){
         return activeProcess;
     }
-
 
 
     /**
@@ -293,9 +306,10 @@ public class Process {
      * Sets the time the process is completed by the CPU
      * @param exitTime the time the process is completed by the CPU
      */
-    public void setExitTime(int exitTime) {
+    public void setExitTime(int exitTime) throws Exception {
         this.exitTime = exitTime;
         exitUpdated = true;
+        generatePerformanceStatistics();
     }
 
 
