@@ -285,8 +285,11 @@ public class Process {
      * @param startTime the process start time
      */
     public void setStartTime(int startTime) {
-        this.startTime = startTime;
-        startUpdated = true;
+        if(!startUpdated){
+            this.startTime = startTime;
+            startUpdated = true;
+        }
+
     }
 
     /**
@@ -355,7 +358,7 @@ public class Process {
      * waiting for the CPU
      */
     private void setWaitingTime() {
-        this.waitingTime = this.exitTime - this.arrivalTime - this.totalCPUBurstTime;
+        this.waitingTime = this.exitTime - this.arrivalTime - this.totalCPUBurstTime - this.totalIOTime;
     }
 
     /**

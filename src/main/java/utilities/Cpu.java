@@ -1,6 +1,9 @@
 package utilities;
 
+import java.text.DecimalFormat;
 import java.util.*;
+
+import static java.lang.Math.round;
 
 
 public class Cpu implements CpuInterface {
@@ -49,6 +52,10 @@ public class Cpu implements CpuInterface {
         return onCpu;
     }
 
+    public float getCpuUtilization(){
+        return 100 * (float)useTime / (float)time;
+    }
+
     public boolean isInUse() {
         return inUse;
     }
@@ -62,6 +69,7 @@ public class Cpu implements CpuInterface {
     public boolean addProcess(Process process){
         if(!readyProcesses.contains(process)){
             readyProcesses.add(process);
+            process.setArrivalTime(getTime());
             return true;
         }
         else{
@@ -71,14 +79,32 @@ public class Cpu implements CpuInterface {
 
     public void setProcessList(List<Process> processes){
         readyProcesses = processes;
+        for(Process p : processes){
+            p.setArrivalTime(getTime());
+        }
     }
 
+    public void nextProcessToCpuPreempt(){
+        if(readyProcesses.size() > 0){
+            preemptOnCpu(readyProcesses.get(0));
+        }
+    }
+
+    public boolean nextProcessToCpuIfIdle(){
+        if(readyProcesses.size() > 0){
+            return sendToCpuIfEmpty(readyProcesses.get(0));
+        }
+        return false;
+    }
     public boolean idle(){
         return onCpu == null;
     }
 
-    public boolean checkCompletion(){
+    public boolean checkCompletion() throws Exception {
         if(readyProcesses.size() == 0 && ioProcesses.size() == 0 && onCpu == null){
+            for(int i = 0; i < completedProcesses.size(); i++){
+                completedProcesses.get(i).generatePerformanceStatistics();
+            }
             return true;
         }
         else{
@@ -94,6 +120,7 @@ public class Cpu implements CpuInterface {
             if(onCpu.decrementActiveProcess()) {
                 if(onCpu.getCompletion()){
                     completedProcesses.add(onCpu);
+                    onCpu.setExitTime(getTime());
                 }
                 else{
                     ioProcesses.add(onCpu);
@@ -122,6 +149,7 @@ public class Cpu implements CpuInterface {
     public boolean sendToCpuIfEmpty(Process process){
         if(idle()){
             onCpu = process;
+            onCpu.setStartTime(getTime());
             readyProcesses.remove(process);
             if(printInfo){
                 printSnapshot("Process added to cpu!");
@@ -136,6 +164,7 @@ public class Cpu implements CpuInterface {
             readyProcesses.add(onCpu);
         }
         onCpu = process;
+        onCpu.setStartTime(getTime());
         readyProcesses.remove(process);
         if(printInfo){
             printSnapshot("Process preempted from cpu!");

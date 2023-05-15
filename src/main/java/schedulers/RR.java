@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Queue;
 
 import utilities.Cpu;
+import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
@@ -26,6 +27,8 @@ public class RR implements SchedulerInterface {
      * True if processes have been executed, false if otherwise
      */
     private Boolean processesExecuted;
+
+    private CpuInterface cpu;
 
     /**
      * @inheritDoc
@@ -87,6 +90,6 @@ public class RR implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Round Robin", processes);
+        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes,cpu);
     }
 }

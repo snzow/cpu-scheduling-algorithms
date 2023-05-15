@@ -2,6 +2,7 @@ package schedulers;
 
 import java.util.List;
 
+import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
 
@@ -23,6 +24,8 @@ public class FCFS implements SchedulerInterface {
      * True if processes have been executed, false if otherwise
      */
     private Boolean processesExecuted;
+
+    private CpuInterface cpu;
 
     /**
      * @inheritDoc
@@ -72,7 +75,7 @@ public class FCFS implements SchedulerInterface {
             if (!processesExecuted) {
                 throw new Exception("Must complete processes before generating metrics");
             }
-            return new PerformanceMetricGenerator("Multilevel Queue", processes);
+            return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes,cpu);
         }
 
     }

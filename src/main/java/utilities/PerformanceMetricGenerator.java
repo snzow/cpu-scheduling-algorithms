@@ -1,5 +1,6 @@
 package utilities;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class PerformanceMetricGenerator {
@@ -12,7 +13,7 @@ public class PerformanceMetricGenerator {
     private final float cpuUtilization;
     private int totalTimeTotal;
 
-    public PerformanceMetricGenerator(String schedulingAlgoName, List<Process> processes) {
+    public PerformanceMetricGenerator(String schedulingAlgoName, List<Process> processes,CpuInterface cpu) {
         this.algorithmExecuted = schedulingAlgoName;
         this.processes = processes;
 
@@ -26,7 +27,14 @@ public class PerformanceMetricGenerator {
             responseTimeTotal += process.getResponseTime();
             totalTimeTotal += process.getTotalTime();
         }
-        this.cpuUtilization = turnaroundTimeTotal / totalTimeTotal;
+        if(cpu != null){
+            this.cpuUtilization = cpu.getCpuUtilization();
+            totalTimeTotal = cpu.getTime();
+        }
+        else{
+            this.cpuUtilization = turnaroundTimeTotal /totalTimeTotal;
+        }
+
         this.waitingTimeAverage = waitingTimeTotal / processes.size();
         this.turnaroundTimeAverage = turnaroundTimeTotal / processes.size();
         this.responseTimeAverage = responseTimeTotal / processes.size();
@@ -68,7 +76,8 @@ public class PerformanceMetricGenerator {
         sb.append("\n");
 
         sb.append(String.format("%-" + columnWidth1 + "s", "CPU Utilization:"));
-        sb.append(cpuUtilization);
+        DecimalFormat df = new DecimalFormat("#.00");
+        sb.append(df.format(cpuUtilization) + "%");
         sb.append("\n");
         sb.append("\n");
 

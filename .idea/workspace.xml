@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="RR algorithm">
+    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLFQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLFQ.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/Priority.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/Priority.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/SJF.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/SJF.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/SchedulerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/SchedulerInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/CpuInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/CpuInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/PerformanceMetricGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/PerformanceMetricGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Process.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,14 +61,11 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -90,6 +100,7 @@
       <workItem from="1684081296761" duration="3931000" />
       <workItem from="1684099904090" duration="9660000" />
       <workItem from="1684125035161" duration="1798000" />
+      <workItem from="1684185272884" duration="2910000" />
     </task>
     <task id="LOCAL-00001" summary="RR algorithm">
       <created>1684118088023</created>
@@ -126,6 +137,11 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="6" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/schedulers/MLQ.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
