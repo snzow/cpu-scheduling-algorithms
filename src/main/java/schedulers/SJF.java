@@ -2,6 +2,7 @@ package schedulers;
 
 import java.util.*;
 
+import utilities.CpuInterface;
 import utilities.Cpu;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
@@ -24,6 +25,8 @@ public class SJF implements SchedulerInterface {
      * True if processes have been executed, false if otherwise
      */
     private Boolean processesExecuted;
+
+    private CpuInterface cpu;
 
     /**
      * @inheritDoc
@@ -90,6 +93,6 @@ public class SJF implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Shortest Job First", processes);
+        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes,cpu);
     }
 }

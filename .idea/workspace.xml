@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="RR algorithm">
-      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" afterDir="false" />
+    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Process.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,14 +48,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "nodejs_package_manager_path": "npm"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.Recents.Supers">
       <recent name="" />
@@ -90,6 +88,7 @@
       <workItem from="1684081296761" duration="3931000" />
       <workItem from="1684099904090" duration="9660000" />
       <workItem from="1684125035161" duration="1798000" />
+      <workItem from="1684185272884" duration="4952000" />
     </task>
     <task id="LOCAL-00001" summary="RR algorithm">
       <created>1684118088023</created>

@@ -33,7 +33,18 @@ public interface CpuInterface {
      */
     public List<Process> getIoProcesses();
 
+
+    /**
+     * checks if the cpu is idle
+     * @return true if idle, false if not
+     */
     public boolean idle();
+
+    /**
+     * returns the cpu utilization
+     * @return the cpu utilization
+     */
+    public float getCpuUtilization();
 
     /**
      *
@@ -42,6 +53,21 @@ public interface CpuInterface {
      */
     public boolean addProcess(Process process);
 
+
+    /**
+     * sets the process list to the provided list of processes
+     * WARNING: will replace the current process list so anything previously added
+     * willl be lost when using this method
+     * @param processList list of processes to put in cpu ready queue.
+     */
+    public void setProcessList(List<Process> processList);
+
+    /**
+     * checks to see if all processes are complete
+     * @return true if all processes are complete, false if not
+     */
+    public boolean checkCompletion() throws Exception;
+
     /**
      * ticks the cpu forward by one time increment
      * decrements all io processes and any cpu burst by 1
@@ -49,11 +75,7 @@ public interface CpuInterface {
      * also moves any fully completed processes out of io.
      * @return true if the cpu process finished this tick, false otherwise
      */
-
-    public void setProcessList(List<Process> processList);
-
-    public boolean checkCompletion();
-    public boolean cpuTick();
+    public boolean cpuTick() throws Exception;
 
     /**
      * puts the process on the cpu if it is available,
@@ -68,6 +90,23 @@ public interface CpuInterface {
      */
     public void preemptOnCpu(Process process);
 
+    /**
+     * puts the process at the front of the ready queue on the cpu
+     * preempting anything that is already on it
+     */
+    public void nextProcessToCpuPreempt();
+
+    /**
+     * puts the process at the front of the ready queue on the cpu
+     * if the cpu is idle.
+     * @return true if the next process was added to the cpu, false if not
+     */
+    public boolean nextProcessToCpuIfIdle();
+
+    /**
+     * returns the time elapsed from the cpu
+     * @return time elapsed
+     */
     public int getTime();
 
 

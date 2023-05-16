@@ -37,28 +37,41 @@ public class MLQ implements SchedulerInterface {
     private List<Process> background;
     private int quantum;
 
+    private CpuInterface cpu;
+
     public MLQ(ArrayList<Process> foregroundList, ArrayList<Process> backgroundList, int quantum){
         this.foreground = foregroundList;
         this.background = backgroundList;
         this.processes = new ArrayList<>();
+        for(Process p : foreground){
+            processes.add(p);
+        }
+        for(Process p : background){
+            processes.add(p);
+        }
         this.quantum = quantum;
 
     }
     @Override
     public void loadProcesses(List<Process> processes) {
         this.processes = processes;
+
     }
 
     /**
      * @inheritDoc
      */
     @Override
-    public void executeProcesses(Boolean contextStream) {
+    public void executeProcesses(Boolean contextStream) throws Exception {
 
         // YOUR ALGORITHM HERE :)
 
-
-        CpuInterface cpu = new Cpu(true);
+        if(contextStream){
+            this.cpu = new Cpu(true);
+        }
+        else{
+            this.cpu = new Cpu();
+        }
         HashMap<Process, List<Process>> processListMap = new HashMap<>();
         for(Process p : foreground){
             cpu.addProcess(p);
@@ -118,6 +131,9 @@ public class MLQ implements SchedulerInterface {
                     }
 
                 }
+                if(cpu.checkCompletion()){
+                    break;
+                }
             }
         }
         this.processesExecuted = true;
@@ -131,7 +147,7 @@ public class MLQ implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Multilevel Queue", processes);
+        return new PerformanceMetricGenerator("Multilevel Queue", processes,cpu);
     }
 
 }
