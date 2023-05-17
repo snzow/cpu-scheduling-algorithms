@@ -78,8 +78,8 @@ public class Cpu implements CpuInterface {
     }
 
     public void setProcessList(List<Process> processes){
-        readyProcesses = processes;
         for(Process p : processes){
+            readyProcesses.add(p);
             p.setArrivalTime(getTime());
         }
     }
