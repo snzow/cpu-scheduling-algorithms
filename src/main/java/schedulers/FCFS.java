@@ -52,6 +52,13 @@ public class FCFS implements SchedulerInterface {
             waitingTime [i] = processes.get(i).getWaitingTime();
         }
         
+        //calculate waiting time
+        waitingTimes[0] = 0;
+        int currentWait = 0;
+        for (int i = 1; i < waitingTimes.size(); i++) {
+            currentWait += processes.get(i - 1).getTraceTape(0);
+            waitingTimes[i] = currentWait}
+        
         //function for turn around time
         for (int i = 0; i < size; i++) {
             turnaroundTime [i] = processes.get(i).getTurnaroundTime();
