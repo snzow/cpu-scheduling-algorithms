@@ -49,12 +49,12 @@ public class FCFS implements SchedulerInterface {
         
         //function for waiting time
         for (int i = 0; i < size; i++) {
-            waitingTime [] = processes.get(i).getWaitingTime();
+            waitingTime [i] = processes.get(i).getWaitingTime();
         }
         
         //function for turn around time
         for (int i = 0; i < size; i++) {
-            turnaroundTime [] = processes.get(i).getTurnaroundTime();
+            turnaroundTime [i] = processes.get(i).getTurnaroundTime();
         }
         
 
