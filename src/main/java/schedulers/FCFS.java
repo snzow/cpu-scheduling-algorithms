@@ -1,6 +1,7 @@
 package schedulers;
 
 import java.util.List;
+import utilities.Cpu;
 
 import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
@@ -42,28 +43,24 @@ public class FCFS implements SchedulerInterface {
     public void executeProcesses(Boolean contextStream) {
 
         // YOUR ALGORITHM HERE :)
-     /*   List<Process> processes = Utility.deepCopy(process);
-        Utility.sortArrival(processes);
-        int timeline = 0;
-        double avg_waiting = 0;
-        double avg_turnaround = 0;
-        for (Row i : processes) {
-            if (timeline < i.getArrivalTime()) {
-                timeline = i.getArrivalTime();
-            }
-            i.setStartTime(timeline);
-            timeline += i.getBurstTime();
-            i.setFinishTime(timeline);
-            i.setWaitingTime(i.getStartTime() - i.getArrivalTime());
-            avg_waiting += i.getWaitingTime();
-            i.setTurnaroundTime(i.getBurstTime() + i.getWaitingTime());
-            avg_turnaround += i.getTurnaroundTime();
-
+    int size = processes.size();
+    int[] waitingTime = new int[size];
+    int[] turnaroundTime = new int[size];
+        
+        //function for waiting time
+        for (int i = 0; i < size; i++) {
+            waitingTime [] = processes.get(i).getWaitingTime();
+        }
+        
+        //function for turn around time
+        for (int i = 0; i < size; i++) {
+            turnaroundTime [] = processes.get(i).getTurnaroundTime();
+        }
         
 
         this.processesExecuted = true;
 
-      */
+     
     }
 
 
