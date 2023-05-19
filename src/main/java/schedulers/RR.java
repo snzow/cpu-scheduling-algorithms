@@ -35,6 +35,7 @@ public class RR implements SchedulerInterface {
      */
     @Override
     public void loadProcesses(List<Process> processes) {
+
         this.processes = processes;
     }
 
@@ -78,6 +79,26 @@ public class RR implements SchedulerInterface {
 //            while (!cpu.cpuTick()) {
 //
 //            }
+        }
+        this.processesExecuted = true;
+    }
+
+    public void executeProcess() throws Exception {
+        cpu = new Cpu();
+        cpu.setProcessList(processes);
+        int quantum = 5;
+        int quantumCount = 0;
+        cpu.nextProcessToCpuIfIdle();
+        while(!cpu.checkCompletion()){
+            cpu.cpuTick();
+            quantumCount++;
+            if(cpu.idle()){
+                cpu.nextProcessToCpuIfIdle();
+            }
+            else if(quantum == quantumCount){
+                quantumCount = 0;
+                cpu.nextProcessToCpuPreempt();
+            }
         }
         this.processesExecuted = true;
     }

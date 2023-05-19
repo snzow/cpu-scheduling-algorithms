@@ -41,32 +41,36 @@ public class SJF implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparing(o -> o.getTraceTape().get(o.getTapeCursor())));
-        Queue<Process> ioQueue = new LinkedList<>();
-        readyQueue.addAll(processes);
-        int time = 0;
-
-        while (!readyQueue.isEmpty() || !ioQueue.isEmpty()) {
-            if (!readyQueue.isEmpty()) {
-                Process current = readyQueue.poll();
-                if (current.getTapeCursor() == 0) {
-                    current.setStartTime(time);
-                }
-                time += current.getTraceTape().get(current.getTapeCursor());
-                current.nextTapeItem();
-                if (!current.getCompletion()) {
-                    ioQueue.add(current);
-                    current.setIoLogTime(time);
-                } else {
-                    current.setExitTime(time);
-                }
+        this.processes.sort(Comparator.comparing(Process::getActiveProcessTimeRemaining));
+        ArrayList<Process> activeList = new ArrayList<>();
+        for(Process p : processes){
+            activeList.add(p);
+        }
+        cpu = new Cpu();
+        cpu.setProcessList(activeList);
+        cpu.sendToCpuIfEmpty(activeList.remove(0));
+        while(!cpu.checkCompletion()){
+            cpu.cpuTick();
+            activeList.sort(Comparator.comparing(Process::getActiveProcessTimeRemaining));
+            if(cpu.idle() && activeList.size() > 0){
+                cpu.sendToCpuIfEmpty(activeList.remove(0));
             }
-            int timeChange = checkIOQ(time, ioQueue, readyQueue);
-            if (timeChange > 0) {
-                time += timeChange;
+            else if(activeList.size() > 0 && activeList.get(0).getActiveProcessTimeRemaining() < cpu.getOnCpu().getActiveProcessTimeRemaining() ){
+                Process temp = cpu.getOnCpu();
+                cpu.preemptOnCpu(activeList.remove(0));
+                activeList.add(temp);
+            }
+
+
+
+            for(Process p : cpu.getReadyProcesses()){
+                if(!activeList.contains(p)){
+                    activeList.add(p);
+                }
             }
         }
-        this.processesExecuted = true;
+        processesExecuted = true;
+
     }
 
     private int checkIOQ(int currentTime, Queue<Process> ioQueue, Queue<Process> readyQueue) {

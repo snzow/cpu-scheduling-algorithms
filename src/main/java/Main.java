@@ -23,7 +23,7 @@ public class Main {
         // ROUND ROBIN
         RR rr = new RR();
         rr.loadProcesses(processes);
-        rr.executeProcesses(false);
+        rr.executeProcess();
         System.out.println("ROUND ROBIN:");
         System.out.println(rr.generatePerformanceMetrics().toString());
         System.out.println();
