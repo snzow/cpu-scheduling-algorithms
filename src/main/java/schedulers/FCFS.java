@@ -2,6 +2,7 @@ package schedulers;
 
 import java.util.List;
 
+import utilities.Cpu;
 import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
@@ -39,7 +40,8 @@ public class FCFS implements SchedulerInterface {
      * @inheritDoc
      */
     @Override
-    public void executeProcesses(Boolean contextStream) {
+    public void executeProcesses(Boolean contextStream) throws Exception {
+
 
         // YOUR ALGORITHM HERE :)
      /*   List<Process> processes = Utility.deepCopy(process);
@@ -63,7 +65,9 @@ public class FCFS implements SchedulerInterface {
 
         this.processesExecuted = true;
 
-      */
+
+*/
+
     }
 
 
