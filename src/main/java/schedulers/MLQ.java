@@ -39,23 +39,24 @@ public class MLQ implements SchedulerInterface {
 
     private CpuInterface cpu;
 
-    public MLQ(ArrayList<Process> foregroundList, ArrayList<Process> backgroundList, int quantum){
-        this.foreground = foregroundList;
-        this.background = backgroundList;
-        this.processes = new ArrayList<>();
-        for(Process p : foreground){
-            processes.add(p);
-        }
-        for(Process p : background){
-            processes.add(p);
-        }
+    public MLQ(int quantum){
         this.quantum = quantum;
 
     }
     @Override
     public void loadProcesses(List<Process> processes) {
-        this.processes = processes;
-
+        this.processes = new ArrayList<>();
+        this.foreground = new ArrayList<>();
+        this.background = new ArrayList<>();
+        for(Process p : processes){
+            this.processes.add(p);
+            if(processes.indexOf(p) < 4){
+                foreground.add(p);
+            }
+            else{
+                background.add(p);
+            }
+        }
     }
 
     /**
@@ -63,15 +64,15 @@ public class MLQ implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-
-        // YOUR ALGORITHM HERE :)
-
+        //if contextstream we will print snapshots every time onCpu changes
         if(contextStream){
             this.cpu = new Cpu(true);
         }
         else{
             this.cpu = new Cpu();
         }
+
+        //initialize a map that will store which queue each process belongs in.
         HashMap<Process, List<Process>> processListMap = new HashMap<>();
         for(Process p : foreground){
             cpu.addProcess(p);
@@ -81,62 +82,65 @@ public class MLQ implements SchedulerInterface {
             cpu.addProcess(p);
             processListMap.put(p,background);
         }
+
+        //put the first item on the cpu and initialize quantum counter and time counter to 0
         cpu.sendToCpuIfEmpty(foreground.remove(0));
         int quantumCount = 0;
+        int timeCounter = 0;
+
+        //while all processes are not complete
         while(!cpu.checkCompletion()){
-            for(int i = 0; i < 50; i++){
-                if(i < 40){
-                    cpu.cpuTick();
-                    if (foreground.size() == 0){
-                    }
-                    else if(cpu.idle()){
-                        cpu.sendToCpuIfEmpty(foreground.remove(0));
-                    }
-                    else if(quantum == quantumCount){
-                        Process temp = cpu.getOnCpu();
-                        cpu.preemptOnCpu(foreground.remove(0));
+            //tick the cpu and increase the quantum
+            cpu.cpuTick();
+            quantumCount++;
 
-                        processListMap.get(temp).add(temp);
-                    }
-                    if(quantumCount >= quantum){
-                        quantumCount = -1;
-                    }
-                    quantumCount++;
-
+            /* if the timecounter is below 40 we want to do a foreground process
+            in line with our 80/20 split. but if foreground queue is empty we will
+            skip over it for efficiency's sake */
+            if(timeCounter < 40 && foreground.size() > 0){
+                if(cpu.idle()){
+                    cpu.sendToCpuIfEmpty(foreground.remove(0));
                 }
-                else{
-                    if(background.size() == 0){
-                        cpu.cpuTick();
-                    }
-                    else{
-                        if(i == 40){
-                            if(!cpu.idle()){
-                                Process temp = cpu.getOnCpu();
-                                processListMap.get(temp).add(temp);
-                            }
-                            cpu.preemptOnCpu(background.remove(0));
-                            cpu.cpuTick();
-                        }
-                        else{
-                            if(cpu.sendToCpuIfEmpty(background.remove(0))){
-                            }
-                            cpu.cpuTick();
-                        }
-                    }
-
+                else if(quantumCount >= quantum){
+                    Process temp = cpu.getOnCpu();
+                    cpu.preemptOnCpu(foreground.remove(0));
+                    quantumCount = 0;
+                    processListMap.get(temp).add(temp);
                 }
-                for(Process p : cpu.getReadyProcesses()){
-                    if(!processListMap.get(p).contains(p)){
-                        processListMap.get(p).add(p);
-                    }
-
+            }
+            /*
+            we are here if either it is the 10 ticks alloted to background
+            OR foreground queue is empty. if there are items in the background queue
+            we will use fcfs process on them
+             */
+            else if(background.size() > 0){
+                if(cpu.idle()){
+                    cpu.sendToCpuIfEmpty(background.remove(0));
                 }
-                if(cpu.checkCompletion()){
-                    break;
+            }
+            /* this if only activates if it is the background's turn but background queue
+            is empty. in that case so long as foreground queue isnt empty we will go back to drawing from it
+             */
+            else if(foreground.size() > 0){
+                if(cpu.idle()){
+                    cpu.sendToCpuIfEmpty(foreground.remove(0));
+                }
+            }
+
+            //increment time and reset it back to 0 if it is at 50
+            timeCounter++;
+            if(timeCounter == 50){
+                timeCounter = 0;
+            }
+            //check the cpu ready processes and make sure that anything that returned from io is also
+            //returned to our external queues.
+            for(Process p : cpu.getReadyProcesses()){
+                if(!processListMap.get(p).contains(p)){
+                    processListMap.get(p).add(p);
                 }
             }
         }
-        this.processesExecuted = true;
+        processesExecuted = true;
     }
 
     /**

@@ -7,8 +7,8 @@
     <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="RR algorithm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/FCFS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Cpu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utilities/Process.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utilities/Process.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +95,8 @@
       <workItem from="1684185272884" duration="5340000" />
       <workItem from="1684251179871" duration="1566000" />
       <workItem from="1684257279674" duration="1675000" />
-      <workItem from="1684360274788" duration="1674000" />
+      <workItem from="1684360274788" duration="3044000" />
+      <workItem from="1684454420996" duration="2063000" />
     </task>
     <task id="LOCAL-00001" summary="RR algorithm">
       <created>1684118088023</created>
@@ -128,11 +129,11 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
+        <breakpoint type="java-exception">
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="6" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint type="java-method">
           <url>file://$PROJECT_DIR$/src/main/java/utilities/Process.java</url>
           <line>299</line>
           <properties class="utilities.Process" method="setStartTime">
