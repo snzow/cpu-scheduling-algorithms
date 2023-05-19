@@ -3,7 +3,6 @@ package schedulers;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Queue;
 
 import utilities.Cpu;
 import utilities.CpuInterface;
@@ -20,10 +19,7 @@ public class MLQ implements SchedulerInterface {
      * Processes for scheduler simulation
      */
     private List<Process> processes;
-    /**
-     * Total time scheduler is active for all processes
-     */
-    private float totalExecutionTime;
+
     /**
      * True if processes have been executed, false if otherwise
      */
@@ -35,7 +31,7 @@ public class MLQ implements SchedulerInterface {
 
     private List<Process> foreground;
     private List<Process> background;
-    private int quantum;
+    private final int quantum;
 
     private CpuInterface cpu;
 
@@ -64,7 +60,7 @@ public class MLQ implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-        //if contextstream we will print snapshots every time onCpu changes
+        //if contextStream we will print snapshots every time onCpu changes
         if(contextStream){
             this.cpu = new Cpu(true);
         }
@@ -94,7 +90,7 @@ public class MLQ implements SchedulerInterface {
             cpu.cpuTick();
             quantumCount++;
 
-            /* if the timecounter is below 40 we want to do a foreground process
+            /* if the timeCounter is below 40 we want to do a foreground process
             in line with our 80/20 split. but if foreground queue is empty we will
             skip over it for efficiency's sake */
             if(timeCounter < 40 && foreground.size() > 0){
@@ -109,7 +105,7 @@ public class MLQ implements SchedulerInterface {
                 }
             }
             /*
-            we are here if either it is the 10 ticks alloted to background
+            we are here if either it is the 10 ticks allotted to background
             OR foreground queue is empty. if there are items in the background queue
             we will use fcfs process on them
              */
@@ -118,8 +114,8 @@ public class MLQ implements SchedulerInterface {
                     cpu.sendToCpuIfEmpty(background.remove(0));
                 }
             }
-            /* this if only activates if it is the background's turn but background queue
-            is empty. in that case so long as foreground queue isnt empty we will go back to drawing from it
+            /* this only activates if it's the background's turn but background queue
+            is empty. in that case so long as foreground queue isn't empty we will go back to drawing from it
              */
             else if(foreground.size() > 0){
                 if(cpu.idle()){
