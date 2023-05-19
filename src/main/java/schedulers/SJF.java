@@ -73,22 +73,6 @@ public class SJF implements SchedulerInterface {
 
     }
 
-    private int checkIOQ(int currentTime, Queue<Process> ioQueue, Queue<Process> readyQueue) {
-        int timeDelta = -1;
-        if (!ioQueue.isEmpty()) {
-            Process current = ioQueue.peek();
-            if (currentTime - current.getIoLogTime() >= current.getTraceTape().get(current.getTapeCursor())) {
-                current.nextTapeItem();
-                readyQueue.add(ioQueue.poll());
-            } else if (readyQueue.isEmpty()) {
-                timeDelta = current.getTraceTape().get(current.getTapeCursor()) - currentTime;
-                current.nextTapeItem();
-                readyQueue.add(ioQueue.poll());
-            }
-        }
-        return timeDelta;
-    }
-
     /**
      * @inheritDoc
      */
