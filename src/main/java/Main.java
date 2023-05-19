@@ -29,23 +29,27 @@ public class Main {
         System.out.println();
         resetProcess(processes);
 
+
+
         // MULTILEVEL QUEUE
-        ArrayList<Process> background = new ArrayList<>(processes.subList(4, processes.size()));
-        ArrayList<Process> foreground = new ArrayList<>(processes.subList(0, 4));
-        MLQ mlq = new MLQ(foreground,background,5);
+
+        MLQ mlq = new MLQ(5);
+        mlq.loadProcesses(processes);
         mlq.executeProcesses(false);
         System.out.println("MULTILEVEL QUEUE:");
         System.out.println(mlq.generatePerformanceMetrics().toString());
         resetProcess(processes);
 
+
+        /*
         //FIRST-COME FIRST SERVED
-//        FCFS fcfs = new FCFS();
-//        fcfs.loadProcesses(processes);
-//        fcfs.executeProcesses(false);
-//        System.out.println("FIRST-COME FIRST SERVED:");
-//        System.out.println(fcfs.generatePerformanceMetrics().toString());
-//        System.out.println();
-//        resetProcess(processes);
+        FCFS fcfs = new FCFS();
+          fcfs.loadProcesses(processes);
+          fcfs.executeProcesses(false);
+            System.out.println("FIRST-COME FIRST SERVED:");
+            System.out.println(fcfs.generatePerformanceMetrics().toString());
+            resetProcess(processes);
+            */
     }
 
     /**

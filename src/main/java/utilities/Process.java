@@ -395,8 +395,10 @@ public class Process {
         this.waitingTime = 0;
         this.turnaroundTime = 0;
         this.exitTime = 0;
+        this.startTime = 0;
         this.complete = false;
         this.tapeCursor = 0;
+        this.startUpdated = false;
         this.arrivalUpdated = false;
         this.exitUpdated = false;
     }
