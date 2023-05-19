@@ -41,15 +41,14 @@ public class Main {
         resetProcess(processes);
 
 
-        /*
+
         //FIRST-COME FIRST SERVED
         FCFS fcfs = new FCFS();
           fcfs.loadProcesses(processes);
           fcfs.executeProcesses(false);
-            System.out.println("FIRST-COME FIRST SERVED:");
-            System.out.println(fcfs.generatePerformanceMetrics().toString());
-            resetProcess(processes);
-            */
+          System.out.println("FIRST-COME FIRST SERVED:");
+          System.out.println(fcfs.generatePerformanceMetrics().toString());
+          resetProcess(processes);
     }
 
     /**

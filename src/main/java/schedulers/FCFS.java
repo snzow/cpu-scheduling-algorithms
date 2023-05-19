@@ -41,32 +41,13 @@ public class FCFS implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-
-
-        // YOUR ALGORITHM HERE :)
-     /*   List<Process> processes = Utility.deepCopy(process);
-        Utility.sortArrival(processes);
-        int timeline = 0;
-        double avg_waiting = 0;
-        double avg_turnaround = 0;
-        for (Row i : processes) {
-            if (timeline < i.getArrivalTime()) {
-                timeline = i.getArrivalTime();
-            }
-            i.setStartTime(timeline);
-            timeline += i.getBurstTime();
-            i.setFinishTime(timeline);
-            i.setWaitingTime(i.getStartTime() - i.getArrivalTime());
-            avg_waiting += i.getWaitingTime();
-            i.setTurnaroundTime(i.getBurstTime() + i.getWaitingTime());
-            avg_turnaround += i.getTurnaroundTime();
-
-        
-
+        cpu = new Cpu();
+        cpu.setProcessList(this.processes);
+        while(!cpu.checkCompletion()){
+            cpu.nextProcessToCpuIfIdle();
+            cpu.cpuTick();
+        }
         this.processesExecuted = true;
-
-
-*/
 
     }
 

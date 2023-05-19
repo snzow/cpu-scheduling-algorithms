@@ -96,7 +96,7 @@
       <workItem from="1684251179871" duration="1566000" />
       <workItem from="1684257279674" duration="1675000" />
       <workItem from="1684360274788" duration="3044000" />
-      <workItem from="1684454420996" duration="3280000" />
+      <workItem from="1684454420996" duration="3618000" />
     </task>
     <task id="LOCAL-00001" summary="RR algorithm">
       <created>1684118088023</created>
@@ -141,6 +141,11 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/schedulers/SJF.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
