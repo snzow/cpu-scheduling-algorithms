@@ -41,11 +41,12 @@ public class SJF implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-        this.processes.sort(Comparator.comparing(Process::getActiveProcessTimeRemaining));
+
         ArrayList<Process> activeList = new ArrayList<>();
         for(Process p : processes){
             activeList.add(p);
         }
+        activeList.sort(Comparator.comparing(Process::getActiveProcessTimeRemaining));
         cpu = new Cpu();
         cpu.setProcessList(activeList);
         cpu.sendToCpuIfEmpty(activeList.remove(0));
