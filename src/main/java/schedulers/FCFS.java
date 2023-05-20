@@ -45,22 +45,27 @@ public class FCFS implements SchedulerInterface {
 
 
         // YOUR ALGORITHM HERE :)
-    int size = processes.size();
-    int[] waitingTime = new int[size];
-    int[] turnaroundTime = new int[size];
+        int size = processes.size();
+        int[] waitingTime = new int[size];
+        int[] turnaroundTime = new int[size];
         
         //function for waiting time
         for (int i = 0; i < size; i++) {
             waitingTime [i] = processes.get(i).getWaitingTime();
         }
-        
+
+        //*********************************************************
+        // THIS BLOCK OF CODE DOES NOT COMPILE IT IS COMMENTED OUT
+        // SO THE REST OF THE PROJECT CAN STILL OPERATE
+        // JO MUST FIX THIS IF SHE WISHES TO HAVE IT UNCOMMENTED:
         //calculate waiting time
-        waitingTimes[0] = 0;
-        int currentWait = 0;
-        for (int i = 1; i < waitingTimes.size(); i++) {
-            currentWait += processes.get(i - 1).getTraceTape(0);
-            waitingTimes[i] = currentWait}
-        
+//        waitingTimes[0] = 0;
+//        int currentWait = 0;
+//        for (int i = 1; i < waitingTimes.size(); i++) {
+//            currentWait += processes.get(i - 1).getTraceTape(0);
+//            waitingTimes[i] = currentWait}
+        //*********************************************************
+
         //function for turn around time
         for (int i = 0; i < size; i++) {
             turnaroundTime [i] = processes.get(i).getTurnaroundTime();
