@@ -57,15 +57,6 @@ public class Process {
      * Initializes to 0
      */
     private int priority;
-
-    public int getIoLogTime() {
-        return ioLogTime;
-    }
-
-    public void setIoLogTime(int ioLogTime) {
-        this.ioLogTime = ioLogTime;
-    }
-
     private int ioLogTime;
 
     /**
@@ -243,7 +234,13 @@ public class Process {
         this.priority = priority;
     }
 
+    public int getIoLogTime() {
+        return ioLogTime;
+    }
 
+    public void setIoLogTime(int ioLogTime) {
+        this.ioLogTime = ioLogTime;
+    }
 
     /**
      * Retrieves the time the process arrived at the CPU
