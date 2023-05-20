@@ -14,32 +14,29 @@ public class Process {
      * The name of the process
      */
     private final String processName;
-    
     /**
      * Stores CPU bursts mixed with IO times.
      * Structured as:
      * CPU burst, I/O time, CPU burst, I/O time, CPU burst,
      * I/O time,…….., last CPU burst
      */
-    private List<Integer> traceTape;
-
+    private final List<Integer> traceTape;
     /**
      * Tracks the distance through the tape the process has gotten
      */
     private int tapeCursor;
-
+    /**
+     * Tracks remaining time left on current trace tape process
+     */
     private int activeProcess;
-    private boolean complete;
     /**
      * Total CPU burst time measured in the trace tape
      */
     private int totalCPUBurstTime;
-    
     /**
      * Total IO time measured in the trace tape
      */
     private int totalIOTime;
-
     /**
      * Total time required for process execution
      */
@@ -49,25 +46,21 @@ public class Process {
      * Initializes to 0
      */
     private int priority;
-
     /**
      * Time when the process arrives at the CPU
      */
     private int arrivalTime;
     private Boolean arrivalUpdated;
-    
     /**
      * Time when the CPU begins the process
      */
     private int startTime;
     private Boolean startUpdated;
-    
     /**
      * The point when the CPU finishes the process
      */
     private int exitTime;
     private Boolean exitUpdated;
-
     /**
      * The amount of time it takes for the CPU to respond
      * to a request by the process
@@ -85,6 +78,10 @@ public class Process {
      * and its completion
      */
     private int turnaroundTime;
+    /**
+     * Indicates process completion
+     */
+    private boolean complete;
 
     /**
      * Process constructor
@@ -137,7 +134,7 @@ public class Process {
     }
 
     /**
-     * Lowers the value of the active process by 1
+     * Lowers the value of the active trace tape process by 1
      * continues to the next item if it reaches 0
      * @return true if the current item is finished, false if not
      */
@@ -150,14 +147,13 @@ public class Process {
 
     }
 
-    public boolean getCompletion(){
-        return complete;
-    }
-    
+    /**
+     * Retrieves the remaining time for active trace tape process
+     * @return the time remaining to complete the active trace tape process
+     */
     public int getActiveProcessTimeRemaining(){
         return activeProcess;
     }
-
 
     /**
      * Retrieves the process name
@@ -165,14 +161,6 @@ public class Process {
      */
     public String getProcessName() {
         return processName;
-    }
-
-    /**
-     * Retrieves the process trace tape
-     * @return the process trace tape
-     */
-    public List<Integer> getTraceTape() {
-        return List.copyOf(traceTape);
     }
 
     /**
@@ -210,11 +198,11 @@ public class Process {
     }
 
     /**
-     * Updates the process trace tape
-     * @param traceTape the new process trace tape
+     * Retrieves process completion status
+     * @return process completion flag
      */
-    public void setTraceTape(List<Integer> traceTape) {
-        this.traceTape = traceTape;
+    public boolean getCompletion(){
+        return complete;
     }
 
     /**
@@ -223,32 +211,6 @@ public class Process {
      */
     public void setPriority(int priority) {
         this.priority = priority;
-    }
-
-    /**
-     * Retrieves the time the process arrived at the CPU
-     * Prerequisite is the arrival time being set first
-     * @return the time the process arrived at the CPU
-     * @throws Exception if prerequisite is not met, throw
-     */
-    public int getArrivalTime() throws Exception {
-        if (!arrivalUpdated) {
-            throw new Exception("This field has not been set yet.");
-        }
-        return arrivalTime;
-    }
-
-    /**
-     * Retrieves the time the CPU begins the process
-     * Prerequisite is the start time being set first
-     * @return the process start time
-     * @throws Exception if the prerequisite is not met, throw
-     */
-    public int getStartTime() throws Exception {
-        if (!startUpdated) {
-            throw new Exception("This field has not been set yet.");
-        }
-        return startTime;
     }
 
     /**
