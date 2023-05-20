@@ -1,4 +1,4 @@
-package utilities;
+package testUtilities;
 
 import org.junit.jupiter.api.Test;
 
