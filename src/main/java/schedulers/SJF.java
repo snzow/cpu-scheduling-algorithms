@@ -41,7 +41,16 @@ public class SJF implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
+//        this.cpu = new Cpu(contextStream);
         PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparing(o -> o.getTraceTape().get(o.getTapeCursor())));
+//        readyQueue.addAll(processes);
+//
+//        while (!readyQueue.isEmpty()) {
+//            cpu.addProcess(readyQueue.peek());
+//            while (!cpu.cpuTick()) {
+//
+//            }
+//        }
         Queue<Process> ioQueue = new LinkedList<>();
         readyQueue.addAll(processes);
         int time = 0;
@@ -66,6 +75,7 @@ public class SJF implements SchedulerInterface {
                 time += timeChange;
             }
         }
+        
         this.processesExecuted = true;
     }
 
@@ -93,6 +103,6 @@ public class SJF implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes,cpu);
+        return new PerformanceMetricGenerator("Shortest Job First", processes,cpu);
     }
 }
