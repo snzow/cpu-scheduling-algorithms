@@ -42,7 +42,20 @@ public class Priority implements SchedulerInterface {
     @Override
     public void executeProcesses(Boolean contextStream) {
 
-        // YOUR ALGORITHM HERE :)
+        processes.sort((p1, p2) -> {
+            if (p1.getPriority() < p2.getPriority()) {
+                return -1;
+            } else if (p1.getPriority() > p2.getPriority()) {
+                return 1;
+            } else {
+                try {
+                    return Integer.compare(p1.getArrivalTime(), p2.getArrivalTime());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return 0;
+        });
 
         this.processesExecuted = true;
     }
