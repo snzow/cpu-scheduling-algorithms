@@ -1,10 +1,6 @@
 package utilities;
 
-import java.text.DecimalFormat;
 import java.util.*;
-
-import static java.lang.Math.round;
-
 
 public class Cpu implements CpuInterface {
     private List<Process> ioProcesses;
@@ -18,7 +14,7 @@ public class Cpu implements CpuInterface {
 
     private boolean inUse;
 
-    private boolean printInfo;
+    private final boolean printInfo;
 
 
     public Cpu(){
@@ -41,7 +37,6 @@ public class Cpu implements CpuInterface {
         this.useTime = 0;
         this.time = 0;
         this.printInfo = printInfo;
-
     }
 
     public int getTime(){
@@ -78,8 +73,8 @@ public class Cpu implements CpuInterface {
     }
 
     public void setProcessList(List<Process> processes){
-        readyProcesses = processes;
         for(Process p : processes){
+            readyProcesses.add(p);
             p.setArrivalTime(getTime());
         }
     }
@@ -96,6 +91,7 @@ public class Cpu implements CpuInterface {
         }
         return false;
     }
+
     public boolean idle(){
         return onCpu == null;
     }
@@ -111,7 +107,6 @@ public class Cpu implements CpuInterface {
             return false;
         }
     }
-
 
     public boolean cpuTick() throws Exception {
         time++;
