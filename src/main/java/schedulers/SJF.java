@@ -2,7 +2,6 @@ package schedulers;
 
 import java.util.*;
 
-import utilities.CpuInterface;
 import utilities.Cpu;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
@@ -18,15 +17,13 @@ public class SJF implements SchedulerInterface {
      */
     private List<Process> processes;
     /**
-     * Total time scheduler is active for all processes
-     */
-    private float totalExecutionTime;
-    /**
      * True if processes have been executed, false if otherwise
      */
     private Boolean processesExecuted;
-
-    private CpuInterface cpu;
+    /**
+     * Current CPU object
+     */
+    private Cpu cpu;
 
     /**
      * @inheritDoc
@@ -41,58 +38,24 @@ public class SJF implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
-//        this.cpu = new Cpu(contextStream);
-        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparing(o -> o.getTraceTape().get(o.getTapeCursor())));
-//        readyQueue.addAll(processes);
-//
-//        while (!readyQueue.isEmpty()) {
-//            cpu.addProcess(readyQueue.peek());
-//            while (!cpu.cpuTick()) {
-//
-//            }
-//        }
-        Queue<Process> ioQueue = new LinkedList<>();
+        this.cpu = new Cpu(contextStream);
+
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getActiveProcessTimeRemaining));
         readyQueue.addAll(processes);
-        int time = 0;
-
-        while (!readyQueue.isEmpty() || !ioQueue.isEmpty()) {
-            if (!readyQueue.isEmpty()) {
-                Process current = readyQueue.poll();
-                if (current.getTapeCursor() == 0) {
-                    current.setStartTime(time);
-                }
-                time += current.getTraceTape().get(current.getTapeCursor());
-                current.nextTapeItem();
-                if (!current.getCompletion()) {
-                    ioQueue.add(current);
-                    current.setIoLogTime(time);
-                } else {
-                    current.setExitTime(time);
-                }
+        cpu.sendToCpuIfEmpty(readyQueue.poll());
+        while (!cpu.checkCompletion()) {
+            cpu.cpuTick();
+            if (cpu.idle() && !readyQueue.isEmpty()) {
+                cpu.sendToCpuIfEmpty(readyQueue.poll());
             }
-            int timeChange = checkIOQ(time, ioQueue, readyQueue);
-            if (timeChange > 0) {
-                time += timeChange;
+
+            for(Process p : cpu.getReadyProcesses()){
+                if(!readyQueue.contains(p)){
+                    readyQueue.add(p);
+                }
             }
         }
-        
         this.processesExecuted = true;
-    }
-
-    private int checkIOQ(int currentTime, Queue<Process> ioQueue, Queue<Process> readyQueue) {
-        int timeDelta = -1;
-        if (!ioQueue.isEmpty()) {
-            Process current = ioQueue.peek();
-            if (currentTime - current.getIoLogTime() >= current.getTraceTape().get(current.getTapeCursor())) {
-                current.nextTapeItem();
-                readyQueue.add(ioQueue.poll());
-            } else if (readyQueue.isEmpty()) {
-                timeDelta = current.getTraceTape().get(current.getTapeCursor()) - currentTime;
-                current.nextTapeItem();
-                readyQueue.add(ioQueue.poll());
-            }
-        }
-        return timeDelta;
     }
 
     /**
@@ -103,6 +66,6 @@ public class SJF implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Shortest Job First", processes,cpu);
+        return new PerformanceMetricGenerator("Shortest Job First", processes, cpu);
     }
 }

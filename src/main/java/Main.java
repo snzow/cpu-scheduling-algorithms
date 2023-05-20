@@ -29,10 +29,7 @@ public class Main {
         System.out.println();
         resetProcess(processes);
 
-
-
         // MULTILEVEL QUEUE
-
         MLQ mlq = new MLQ(5);
         mlq.loadProcesses(processes);
         mlq.executeProcesses(false);
@@ -40,16 +37,13 @@ public class Main {
         System.out.println(mlq.generatePerformanceMetrics().toString());
         resetProcess(processes);
 
-
-        /*
         //FIRST-COME FIRST SERVED
-        FCFS fcfs = new FCFS();
-          fcfs.loadProcesses(processes);
-          fcfs.executeProcesses(false);
-            System.out.println("FIRST-COME FIRST SERVED:");
-            System.out.println(fcfs.generatePerformanceMetrics().toString());
-            resetProcess(processes);
-            */
+//        FCFS fcfs = new FCFS();
+//        fcfs.loadProcesses(processes);
+//        fcfs.executeProcesses(false);
+//        System.out.println("FIRST-COME FIRST SERVED:");
+//        System.out.println(fcfs.generatePerformanceMetrics().toString());
+//        resetProcess(processes);
     }
 
     /**
@@ -94,40 +88,6 @@ public class Main {
         processes.add(p6);
         processes.add(p7);
         processes.add(p8);
-
-
-
-        /*CpuInterface testCpu = new Cpu();
-        for(Process p : processes){
-            testCpu.addProcess(p);
-        }
-        testCpu.sendToCpuIfEmpty(p1);
-        while(!testCpu.cpuTick()){
-        }
-        testCpu.sendToCpuIfEmpty(p2);
-        while(!testCpu.cpuTick()){
-        }
-        testCpu.cpuTick();
-        testCpu.cpuTick();
-        testCpu.cpuTick();
-        testCpu.cpuTick();
-        testCpu.sendToCpuIfEmpty(p3);
-        testCpu.cpuTick();
-        testCpu.cpuTick();
-        testCpu.cpuTick();
-        testCpu.preemptOnCpu(p4);
-        while(!testCpu.cpuTick()){
-
-        }
-        while(testCpu.getIoProcesses().contains(p1)){
-            testCpu.cpuTick();
-        }
-        testCpu.cpuTick();
-        testCpu.sendToCpuIfEmpty(p6);
-
-         */
-
-
     }
 
     private static void resetProcess(List<Process> processes) {

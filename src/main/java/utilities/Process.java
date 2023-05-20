@@ -10,13 +10,10 @@ import java.util.List;
  */
 public class Process {
 
-
-
     /**
      * The name of the process
      */
     private final String processName;
-    
     
     /**
      * Stores CPU bursts mixed with IO times.
@@ -26,28 +23,23 @@ public class Process {
      */
     private List<Integer> traceTape;
 
-    public int getTapeCursor() {
-        return tapeCursor;
-    }
-
     /**
      * Tracks the distance through the tape the process has gotten
      */
     private int tapeCursor;
-    
+
+    private int activeProcess;
+    private boolean complete;
     /**
      * Total CPU burst time measured in the trace tape
      */
-    
-    private int activeProcess;
-    private boolean complete;
     private int totalCPUBurstTime;
     
     /**
      * Total IO time measured in the trace tape
      */
     private int totalIOTime;
-    
+
     /**
      * Total time required for process execution
      */
@@ -57,7 +49,6 @@ public class Process {
      * Initializes to 0
      */
     private int priority;
-    private int ioLogTime;
 
     /**
      * Time when the process arrives at the CPU
@@ -234,14 +225,6 @@ public class Process {
         this.priority = priority;
     }
 
-    public int getIoLogTime() {
-        return ioLogTime;
-    }
-
-    public void setIoLogTime(int ioLogTime) {
-        this.ioLogTime = ioLogTime;
-    }
-
     /**
      * Retrieves the time the process arrived at the CPU
      * Prerequisite is the arrival time being set first
@@ -266,19 +249,6 @@ public class Process {
             throw new Exception("This field has not been set yet.");
         }
         return startTime;
-    }
-
-    /**
-     * Retrieves the time process finished executing
-     * Prerequisite is the exit time being set first
-     * @return the process exit time
-     * @throws Exception if the prerequisite is not met, throw
-     */
-    public int getExitTime() throws Exception {
-        if (!exitUpdated) {
-            throw new Exception("This field has not been set yet.");
-        }
-        return exitTime;
     }
 
     /**
@@ -311,8 +281,6 @@ public class Process {
         exitUpdated = true;
         generatePerformanceStatistics();
     }
-
-
 
     /**
      * Generates process execution statistics
@@ -379,8 +347,6 @@ public class Process {
     private void setTurnaroundTime() {
         this.turnaroundTime = this.exitTime - this.arrivalTime;
     }
-
-
 
     /**
      * Resets all process metrics
