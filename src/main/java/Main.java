@@ -20,6 +20,15 @@ public class Main {
         System.out.println();
         resetProcess(processes);
 
+        // SHORTEST REMAINING TIME FIRST (PREEMPTIVE)
+        SJF srtf = new SJF();
+        srtf.loadProcesses(processes);
+        srtf.executeProcessesPreemptive(false);
+        System.out.println("SHORTEST REMAINING TIME FIRST:");
+        System.out.println(srtf.generatePerformanceMetrics().toString());
+        System.out.println();
+        resetProcess(processes);
+
         // ROUND ROBIN
         RR rr = new RR();
         rr.loadProcesses(processes);

@@ -46,6 +46,7 @@ public class Process {
      * Initializes to 0
      */
     private int priority;
+
     /**
      * Time when the process arrives at the CPU
      */
@@ -169,6 +170,10 @@ public class Process {
      */
     public int getPriority() {
         return priority;
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
     }
 
     /**

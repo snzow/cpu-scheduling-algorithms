@@ -42,7 +42,7 @@ public class SJF implements SchedulerInterface {
 
         PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getActiveProcessTimeRemaining));
         readyQueue.addAll(processes);
-        cpu.sendToCpuIfEmpty(readyQueue.poll());
+        cpu.setProcessList(processes);
         while (!cpu.checkCompletion()) {
             cpu.cpuTick();
             if (cpu.idle() && !readyQueue.isEmpty()) {
@@ -52,6 +52,35 @@ public class SJF implements SchedulerInterface {
             for(Process p : cpu.getReadyProcesses()){
                 if(!readyQueue.contains(p)){
                     readyQueue.add(p);
+                }
+            }
+        }
+        this.processesExecuted = true;
+    }
+
+    /**
+     * Runs a Shortest Remaining Time First scheduler simulation
+     * @param contextStream true if output is to be written to file
+     */
+    public void executeProcessesPreemptive(Boolean contextStream) throws Exception {
+        this.cpu = new Cpu(contextStream);
+
+        PriorityQueue<Process> readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getActiveProcessTimeRemaining));
+        readyQueue.addAll(processes);
+        cpu.setProcessList(processes);
+        while (!cpu.checkCompletion()) {
+            cpu.cpuTick();
+            if (cpu.idle() && !readyQueue.isEmpty()) {
+                cpu.sendToCpuIfEmpty(readyQueue.poll());
+            }
+
+            for(Process p : cpu.getReadyProcesses()){
+                if(!readyQueue.contains(p)){
+                    if (cpu.idle() || p.getActiveProcessTimeRemaining() < cpu.getOnCpu().getActiveProcessTimeRemaining()) {
+                        cpu.preemptOnCpu(p);
+                    } else {
+                        readyQueue.add(p);
+                    }
                 }
             }
         }
