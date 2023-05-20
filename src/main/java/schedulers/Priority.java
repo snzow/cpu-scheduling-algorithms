@@ -42,7 +42,6 @@ public class Priority implements SchedulerInterface {
     @Override
     public void executeProcesses(Boolean contextStream) {
 
-        // YOUR ALGORITHM HERE :)
         processes.sort((p1, p2) -> {
             if (p1.getPriority() < p2.getPriority()) {
                 return -1;
