@@ -83,11 +83,15 @@ disadvantages of FCFS are the average waiting time and turn around time is oten 
 
 ## UML Diagram - A.Bower
 
-(UML here)
+![UML Diagram](img/uml.png)
 
 ## Final Results - tables, plots
 
-(tables and plots here)
+![UML Diagram](img/uml.png)
+![CPU Utilization Bar Graph](img/cpuBar.png)
+![Waiting Time Bar Graph](img/waitingBar.png)
+![Response Time Bar Graphn](img/responseBar.png)
+![Averages Bar Graph](img/averagesBar.png)
 
 ## Discussion and Tables for:
 
