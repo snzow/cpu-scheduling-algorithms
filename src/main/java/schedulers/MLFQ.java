@@ -1,7 +1,11 @@
 package schedulers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import utilities.Cpu;
 import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
@@ -27,23 +31,108 @@ public class MLFQ implements SchedulerInterface {
 
     private CpuInterface cpu;
 
+    private ArrayList<Process> queueOne;
+    private ArrayList<Process> queueTwo;
+    private ArrayList<Process> queueThree;
+    private ArrayList<ArrayList<Process>> queueList;
+    private final int TIME_QUANTUM = 5;
+    private boolean contextStream;
+    private Map<Process, Integer> queueMap;
+
+    public MLFQ(){
+
+    }
+
+
     /**
      * @inheritDoc
      */
     @Override
     public void loadProcesses(List<Process> processes) {
-        this.processes = processes;
+        this.queueOne = new ArrayList<>();
+        this.queueTwo = new ArrayList<>();
+        this.queueThree = new ArrayList<>();
+        this.processes = new ArrayList<>();
+        this.queueMap = new HashMap<>();
+        queueList = new ArrayList<>();
+        queueList.add(queueOne);
+        queueList.add(queueTwo);
+        queueList.add(queueThree);
+        for(Process p : processes){
+            this.processes.add(p);
+            queueOne.add(p);
+            queueMap.put(p,0);
+        }
+        this.cpu = new Cpu();
     }
 
     /**
      * @inheritDoc
      */
     @Override
-    public void executeProcesses(Boolean contextStream) {
+    public void executeProcesses(Boolean contextStream) throws Exception {
+
 
         // YOUR ALGORITHM HERE :)
+        cpu.setProcessList(this.queueOne);
+        cpu.sendToCpuIfEmpty(queueOne.remove(0));
+        List<Process> activeQueue = queueOne;
+        int quantum = 0;
+        int quantumGoal = TIME_QUANTUM;
+        while(!cpu.checkCompletion()){
+            cpu.cpuTick();
+            quantum++;
+            activeQueue = setActiveQueue();
+            if(cpu.idle() && activeQueue.size() > 0){
+                cpu.sendToCpuIfEmpty(activeQueue.remove(0));
+                quantumGoal = setQuantumGoal(activeQueue);
+                quantum = 0;
+            }
+            else if(quantum == quantumGoal  && !cpu.idle()){
+                Process temp = cpu.getOnCpu();
+                queueList.get(queueMap.get(temp) + 1).add(temp);
+                queueMap.put(temp,queueMap.get(temp) + 1);
+                cpu.preemptOnCpu(activeQueue.remove(0));
+                quantumGoal = setQuantumGoal(activeQueue);
+                quantum = 0;
+            }
+            for(Process p : cpu.getReadyProcesses()){
+                if(!inQueue(p)){
+                    queueMap.put(p, queueMap.get(p) + 1);
+                    queueList.get(queueMap.get(p)).add(p);
+                }
+            }
+        }
 
         this.processesExecuted = true;
+    }
+
+    private boolean inQueue(Process p){
+        return queueOne.contains(p) || queueTwo.contains(p) || queueThree.contains(p);
+    }
+
+    private List<Process> setActiveQueue(){
+        if(queueOne.size() > 0){
+            return queueOne;
+        }
+        else if(queueTwo.size() > 0){
+            return queueTwo;
+        }
+        else {
+            return queueThree;
+        }
+    }
+
+    private int setQuantumGoal(List<Process> activeQueue){
+        if(activeQueue.equals(queueOne)){
+            return TIME_QUANTUM;
+        }
+        else if(activeQueue.equals(queueTwo)){
+            return TIME_QUANTUM * 2;
+        }
+        else{
+            return -1;
+        }
     }
 
     /**

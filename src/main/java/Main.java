@@ -39,12 +39,22 @@ public class Main {
         resetProcess(processes);
 
         // MULTILEVEL QUEUE
-        MLQ mlq = new MLQ(5);
+
+        MLQ mlq = new MLQ(5,73);
         mlq.loadProcesses(processes);
         mlq.executeProcesses(false);
-        System.out.println("MULTILEVEL QUEUE:");
+        System.out.println("MULTILEVEL QUEUE: ");
         System.out.println(mlq.generatePerformanceMetrics().toString());
         resetProcess(processes);
+
+        MLFQ mlfq = new MLFQ();
+        mlfq.loadProcesses(processes);
+        mlfq.executeProcesses(false);
+        System.out.println("MULTILEVEL FEEDBACK QUEUE: ");
+        System.out.println(mlfq.generatePerformanceMetrics().toString());
+        resetProcess(processes);
+
+
 
         //FIRST-COME FIRST SERVED
 //        FCFS fcfs = new FCFS();
