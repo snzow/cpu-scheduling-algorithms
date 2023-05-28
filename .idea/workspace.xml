@@ -5,10 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="55e485ab-e259-4730-9522-e97fb5ee598a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLFQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLFQ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/MLQ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/SchedulerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/SchedulerInterface.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,10 +50,16 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/schedulers/MLFQ.java</url>
-          <line>91</line>
-          <option name="timeStamp" value="23" />
+          <line>82</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="GradleRunConfiguration">
+        <watch expression="queueThree.get(0);" language="JAVA" />
+        <watch expression="quantumGoal" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

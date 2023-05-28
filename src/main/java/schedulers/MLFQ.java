@@ -90,15 +90,19 @@ public class MLFQ implements SchedulerInterface {
             }
             else if(quantum == quantumGoal  && !cpu.idle()){
                 Process temp = cpu.getOnCpu();
-                queueList.get(queueMap.get(temp) + 1).add(temp);
-                queueMap.put(temp,queueMap.get(temp) + 1);
+                int tmp = 0;
+                if(queueMap.get(temp) + 1 < 3){
+                  tmp = 1;
+                }
+                queueList.get(queueMap.get(temp) + tmp).add(temp);
+                queueMap.put(temp,queueMap.get(temp) + tmp);
                 cpu.preemptOnCpu(activeQueue.remove(0));
                 quantumGoal = setQuantumGoal(activeQueue);
                 quantum = 0;
             }
             for(Process p : cpu.getReadyProcesses()){
                 if(!inQueue(p)){
-                    queueMap.put(p, queueMap.get(p) + 1);
+                    queueMap.put(p, queueMap.get(p));
                     queueList.get(queueMap.get(p)).add(p);
                 }
             }
