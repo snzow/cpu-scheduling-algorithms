@@ -49,7 +49,7 @@ public class Main {
         resetProcess(processes);
 
         // MULTILEVEL QUEUE
-        MLQ mlq = new MLQ(5);
+        MLQ mlq = new MLQ(5,73);
         mlq.loadProcesses(processes);
         mlq.executeProcesses(false);
         PerformanceMetricGenerator mlqPMG = mlq.generatePerformanceMetrics();
@@ -80,6 +80,7 @@ public class Main {
         System.out.println(priPMG);
         System.out.println();
         resetProcess(processes);
+
 
         //FIRST-COME FIRST SERVED
         FCFS fcfs = new FCFS();
