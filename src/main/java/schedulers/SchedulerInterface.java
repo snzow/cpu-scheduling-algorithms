@@ -24,6 +24,7 @@ public interface SchedulerInterface {
      */
     void executeProcesses(Boolean contextStream) throws Exception;
 
+
     /**
      * Generates scheduler performance metrics for processes given
      * Metrics: 1. total time needed to complete all processes

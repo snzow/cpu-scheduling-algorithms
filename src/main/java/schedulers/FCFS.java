@@ -1,6 +1,7 @@
 package schedulers;
 
 import java.util.List;
+import utilities.Cpu;
 
 import utilities.Cpu;
 import utilities.CpuInterface;
@@ -44,30 +45,34 @@ public class FCFS implements SchedulerInterface {
 
 
         // YOUR ALGORITHM HERE :)
-     /*   List<Process> processes = Utility.deepCopy(process);
-        Utility.sortArrival(processes);
-        int timeline = 0;
-        double avg_waiting = 0;
-        double avg_turnaround = 0;
-        for (Row i : processes) {
-            if (timeline < i.getArrivalTime()) {
-                timeline = i.getArrivalTime();
-            }
-            i.setStartTime(timeline);
-            timeline += i.getBurstTime();
-            i.setFinishTime(timeline);
-            i.setWaitingTime(i.getStartTime() - i.getArrivalTime());
-            avg_waiting += i.getWaitingTime();
-            i.setTurnaroundTime(i.getBurstTime() + i.getWaitingTime());
-            avg_turnaround += i.getTurnaroundTime();
+        int size = processes.size();
+        int[] waitingTime = new int[size];
+        int[] turnaroundTime = new int[size];
+        
+        //function for waiting time
+        for (int i = 0; i < size; i++) {
+            waitingTime [i] = processes.get(i).getWaitingTime();
+        }
 
+        //*********************************************************
+        // THIS BLOCK OF CODE DOES NOT COMPILE IT IS COMMENTED OUT
+        // SO THE REST OF THE PROJECT CAN STILL OPERATE
+        // JO MUST FIX THIS IF SHE WISHES TO HAVE IT UNCOMMENTED:
+        //calculate waiting time
+//        waitingTimes[0] = 0;
+//        int currentWait = 0;
+//        for (int i = 1; i < waitingTimes.size(); i++) {
+//            currentWait += processes.get(i - 1).getTraceTape(0);
+//            waitingTimes[i] = currentWait}
+        //*********************************************************
+
+        //function for turn around time
+        for (int i = 0; i < size; i++) {
+            turnaroundTime [i] = processes.get(i).getTurnaroundTime();
+        }
         
 
         this.processesExecuted = true;
-
-
-*/
-
     }
 
 

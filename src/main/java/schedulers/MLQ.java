@@ -34,9 +34,11 @@ public class MLQ implements SchedulerInterface {
     private final int quantum;
 
     private CpuInterface cpu;
+    private int cycleTime;
 
-    public MLQ(int quantum){
+    public MLQ(int quantum, int cycleTime){
         this.quantum = quantum;
+        this.cycleTime = cycleTime;
 
     }
     @Override
@@ -60,6 +62,7 @@ public class MLQ implements SchedulerInterface {
      */
     @Override
     public void executeProcesses(Boolean contextStream) throws Exception {
+
         //if contextStream we will print snapshots every time onCpu changes
         if(contextStream){
             this.cpu = new Cpu(true);
@@ -90,10 +93,10 @@ public class MLQ implements SchedulerInterface {
             cpu.cpuTick();
             quantumCount++;
 
-            /* if the timeCounter is below 40 we want to do a foreground process
-            in line with our 80/20 split. but if foreground queue is empty we will
+            /* if the timeCounter is below 56 we want to do a foreground process
+            in line with our 80/20 split, which for our numbers is actually about 76.7% foreground. but if foreground queue is empty we will
             skip over it for efficiency's sake */
-            if(timeCounter < 40 && foreground.size() > 0){
+            if(timeCounter < (cycleTime/5)*4 && foreground.size() > 0){
                 if(cpu.idle()){
                     cpu.sendToCpuIfEmpty(foreground.remove(0));
                 }
@@ -123,9 +126,9 @@ public class MLQ implements SchedulerInterface {
                 }
             }
 
-            //increment time and reset it back to 0 if it is at 50
+            //increment time and reset it back to 0 if it is at our cycleTime, which is 73.
             timeCounter++;
-            if(timeCounter == 50){
+            if(timeCounter == cycleTime){
                 timeCounter = 0;
             }
             //check the cpu ready processes and make sure that anything that returned from io is also
@@ -138,6 +141,7 @@ public class MLQ implements SchedulerInterface {
         }
         processesExecuted = true;
     }
+
 
     /**
      * @inheritDoc
