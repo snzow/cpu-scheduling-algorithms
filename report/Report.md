@@ -2,7 +2,42 @@
 
 ## Table of Contents
 
-## Introduction
+Section I - Introduction
+
+Section II - Algorithms
+
+Section III - Report Preemptive FCFS
+
+Section IV - UML Diagram
+
+Section V - Final Results - tables, plots
+
+Section VI - Discussion on what is best solution to implement
+
+## Section I - Introduction - J.Damo
+
+**Scope** of the project to learn about OS scheduling through simulation programming using Java programming along with scheduling analysis
+and integration. The goal of the project for attainment of knowledge of Operating System CPU scheduler algorithms.
+
+**Specific**: Work as a team H2O to implement 8 CPU scheduling algorithms: 1) First Come First Serve (FCFS) non-preemptive, 2) FCFS preemptive
+in a report, 3) Shortest Job First (SJF) non-preemptive, 4) Preemptive Shortest Remaining Time First (SRTF), 5) Priority Scheduling, 6) Round
+Robin with Quantun 5, 7) Multilevel Queue, and 8) Multilevel Feedback Queue.
+
+**Measurable**: Assumptions will be made accordingly as follows: 1) all processes are activated at time 0, 2) no process waits on I/O devices, 
+3) upon completion I/O event process transferred to ready queue, 4) the waiting time accumulated while a process waits in ready queue, 5)
+turnaround time it total of (waiting time) + (CPU burst time) + (I/O time), and lastly 6) response time is the first measure of waiting time
+from arrival at time 0 until the first time on the CPU.
+
+**Accuracy**: The process data goes CPU burst, I/O time. CPU burst, I/O time until last CPU burst. Therefore, implementation of the algorithms
+with Java results to be evaluated in terms of the metrics taking into consideration in the following: 1) current execution time, 2) running
+process, 3) ready queue with CPU burst time for each process, 4) processes in I/O, and 5) process completion its total execution. See Section
+IV for UML Diagram and Section V for Final results to tables, plots, and Section VI for Discussion on what is the best solution for
+implementation.
+
+**Time**: The turnaround time for completing the CPU scheduling project took into consideration two milestone meeting dates: 1) first milestone
+date was May 5th where the project board was filled out about who was assigned to the algorithms, 2) May 16 the CPU scheduler draft was due
+where one algorithm per person implemented along with utility functions and classes created, 3) second milestone date was May 19th where the 
+second algorithm should be implemented by each person and the Final Report started. Lastly, final date to turn in total project May 28th.
 
 ### Attribution Requirement:
 
@@ -13,6 +48,8 @@ Part 2: Java Implementation - A.Bower and N.Trimmer
 Part 3. Output and Testing - A.Bower and N.Trimmer
 
 Part 4. Report and Version Control for Project Board - J.Damo
+
+## Section II - Algorithms
 
 ### Algorithm Multilevel Queue - A.Bower
 
@@ -69,7 +106,7 @@ the shortest remaining time. Advantages if SRTF are the short processes are hand
 that like shortest job first it has the potential for process starvation with long processes can be held off indefinitely if short processes
 are continually added.
 
-### Algorithm First Come First Serve (FCFS) - J.Damo
+### Algorithm First Come First Serve (FCFS) - J.Damo & N.Trimmer
 
 The first come first serve scheduling algorithm in the process which arrive first gets executed first. It is implemented by using the FIFO 
 queue which is the simplest scheduling algorithm in that the FIFO simply queues processes in the order they arrive in the ready queue.
@@ -77,15 +114,33 @@ Advantage for FCFS is that it is simple and easy to understand with a process wi
 quite long. Disadvantages is that important jobs with higher priority have to wait along with not guaranting good response time. Other
 disadvantages of FCFS are the average waiting time and turn around time is oten quite lone with lower CPU and device utilization.
 
+## Section III - Report Preemptive FCFS
+
 ### Report Preemptive FCFS in report section - J.Damo
 
-(2 to 3 paragraphs)
+First Come First Serve (FCFS) can be defined as a type of scheduling algorithm used by operating system and networks to measure efficiency,
+therefore automatically execute queued tasks along with processes and request by the order of their arrival.
 
-## UML Diagram - A.Bower
+What is preemption is and what happens when attempting to create a preemptive FCFS algorithm? The answer is that in an operating system in
+preemptive scheduling is a type of scheduling method in which the CPU is allocated for a limited time to a given given process. On the
+other hand in contrast non-preemptive scheduling is the type of scheduling technique in which the CPU is allocated to a process and held
+by it until the process gets terminated.
+
+How does the FCFS preemptive transform? FCFS in preemptive priority scheduling algorithms in which the processes come with  a priority
+attached to them. Therefore, the lower the priority number, the higher is the priority attached to the process. Likewise, a process with
+higher priority on its arrival preempts an ongoing process.
+
+In evaluating the FCFS preemptive scheduling process in contrast. FCFS executes processes in the same sequence as they enter the ready
+queue in contrast to preemptive priority where it executes those processes first that have the highest priority. Usually FCFS is the
+simplest process for CPU scheduling where as preemptive FCFS is more complicated to implement. In conclusion, I do not thnk FCFS
+preemptive can be implemented without transforming into priority queues because of the necessity of implimenting the lower and higher
+priority queues. Therefore, the preemptive FCFS without the priority queues could not possibly start the processes.
+
+## Section IV - UML Diagram - A.Bower
 
 ![UML Diagram](img/uml.png)
 
-## Final Results - tables, plots
+## Section V - Final Results - tables, plots
 
 ![UML Diagram](img/uml.png)
 ![CPU Utilization Bar Graph](img/cpuBar.png)
@@ -112,7 +167,7 @@ disadvantages of FCFS are the average waiting time and turn around time is oten 
   <li>Average Response Time: data for all algorithms</li>
 </ul>
 
-## Discussion on what is best solution to implement.
+## Section VI - Discussion on what is best solution to implement. A.Bower
 
 Discussion starts here.
 
