@@ -1,1 +1,1 @@
-SEE [FULL REPORT](report/Report.md) FOR THE FULL REPORT
+SEE [FULL REPORT](report/Report.md)
