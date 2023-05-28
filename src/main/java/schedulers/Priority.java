@@ -2,6 +2,7 @@ package schedulers;
 
 import java.util.List;
 
+import utilities.Cpu;
 import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
 import utilities.Process;
@@ -40,24 +41,41 @@ public class Priority implements SchedulerInterface {
      * @inheritDoc
      */
     @Override
-    public void executeProcesses(Boolean contextStream) {
+    public void executeProcesses(Boolean contextSwitch) throws Exception {
+        cpu = new Cpu();
 
-        processes.sort((p1, p2) -> {
-            if (p1.getPriority() < p2.getPriority()) {
-                return -1;
-            } else if (p1.getPriority() > p2.getPriority()) {
-                return 1;
+        // Load the processes into the CPU
+        cpu.setProcessList(processes);
+
+        // Execute processes using Priority Scheduler algorithm
+        while (!cpu.checkCompletion()) {
+            cpu.cpuTick();
+
+            if (contextSwitch) {
+                if (cpu.idle()) {
+                    cpu.nextProcessToCpuPreempt();
+                } else if (cpu.getOnCpu().getActiveProcessTimeRemaining() <= 0) {
+                    cpu.nextProcessToCpuPreempt();
+                } else {
+                    // Check if there is a higher priority process in the ready queue
+                    List<Process> readyProcesses = cpu.getReadyProcesses();
+                    for (Process process : readyProcesses) {
+                        if (process.getPriority() < cpu.getOnCpu().getPriority()) {
+                            cpu.preemptOnCpu(cpu.getOnCpu());
+                            cpu.nextProcessToCpuPreempt();
+                            break;
+                        }
+                    }
+                }
             } else {
-                try {
-                    return Integer.compare(p1.getArrivalTime(), p2.getArrivalTime());
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (cpu.idle()) {
+                    cpu.nextProcessToCpuIfIdle();
                 }
             }
-            return 0;
-        });
+        }
 
-        this.processesExecuted = true;
+        totalExecutionTime = cpu.getTime();
+        processesExecuted = true;
     }
 
     /**

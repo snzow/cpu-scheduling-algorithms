@@ -8,11 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="Priority alg">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/schedulers/RR.java" afterDir="false" />
-    </list>
+    <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="FIXED RR alg" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,7 +91,7 @@
       <workItem from="1684099904090" duration="9660000" />
       <workItem from="1684125035161" duration="1798000" />
       <workItem from="1684185272884" duration="4952000" />
-      <workItem from="1685307746760" duration="1517000" />
+      <workItem from="1685307746760" duration="1868000" />
     </task>
     <task id="LOCAL-00001" summary="RR algorithm">
       <created>1684118088023</created>
@@ -111,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684540942018</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="FIXED RR alg">
+      <created>1685309497322</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1685309497322</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,7 +135,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="RR algorithm" />
     <MESSAGE value="Priority alg" />
-    <option name="LAST_COMMIT_MESSAGE" value="Priority alg" />
+    <MESSAGE value="FIXED RR alg" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIXED RR alg" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
