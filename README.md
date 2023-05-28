@@ -1,2 +1,1 @@
-# CPUScheduler_stub
-Stub for CPU Scheduler project
+SEE [FULL REPORT](report/Report.md) FOR THE FULL REPORT

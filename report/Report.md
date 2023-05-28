@@ -143,10 +143,10 @@ priority queues. Therefore, the preemptive FCFS without the priority queues coul
 ## Section V - Final Results - tables, plots
 
 ![UML Diagram](img/uml.png)
-![CPU Utilization Bar Graph](img/cpuBar.png)
-![Waiting Time Bar Graph](img/waitingBar.png)
-![Response Time Bar Graphn](img/responseBar.png)
-![Averages Bar Graph](img/averagesBar.png)
+![CPU Utilization Bar Graph](img/cpuUtil.png)
+![Waiting Time Bar Graph](img/avgWait.png)
+![Response Time Bar Graph](img/avgResp.png)
+![Turnaround Time Bar Graph](img/avgTurn.png)
 
 ## Discussion and Tables for:
 
