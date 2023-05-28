@@ -1,9 +1,6 @@
 package schedulers;
 
 import java.util.*;
-import java.util.List;
-import java.util.Queue;
-
 import utilities.Cpu;
 import utilities.CpuInterface;
 import utilities.PerformanceMetricGenerator;
@@ -11,7 +8,7 @@ import utilities.Process;
 
 /**
  * Round Robin CPU Scheduling Algorithm
- * @author Bella Mester
+ * author Bella Mester
  */
 public class RR implements SchedulerInterface {
 
@@ -42,44 +39,34 @@ public class RR implements SchedulerInterface {
      * @inheritDoc
      */
     @Override
-    public void executeProcesses(Boolean contextStream) {
-        int size = processes.size();
-        int[] remainingTime = new int[size];
-        int[] waitingTime   = new int[size];
+    public void executeProcesses(Boolean contextSwitch) throws Exception {
+        cpu = new Cpu();
 
-        for (int i = 0; i < size; i++) {
-            remainingTime[i] = processes.get(i).getTotalCPUBurstTime();
-        }
+        // Load the processes into the CPU
+        cpu.setProcessList(processes);
 
-        int quantum = 5;
-        Cpu cpu = new Cpu();
+        // Execute processes using Round Robin algorithm
+        while (!cpu.checkCompletion()) {
+            cpu.cpuTick();
 
-        Queue<Process> processQueue = new LinkedList<>(processes);
-        int time = 0;
-        int completedProcesses = 0;
-        while (completedProcesses < size) {
-            Process process = processQueue.poll();
-            int index = processes.indexOf(process);
-
-            if (remainingTime[index] > 0) {
-                if (remainingTime[index] > quantum) {
-                    time += quantum;
-                    remainingTime[index] -= quantum;
-                    processQueue.offer(process);
+            if (contextSwitch) {
+                if (cpu.idle()) {
+                    cpu.nextProcessToCpuPreempt();
+                } else if (cpu.getOnCpu().getActiveProcessTimeRemaining() <= 0) {
+                    cpu.nextProcessToCpuPreempt();
                 } else {
-                    time += remainingTime[index];
-                    waitingTime[index]   = time - process.getTotalCPUBurstTime();
-                    remainingTime[index] = 0;
-                    completedProcesses++;
+                    cpu.preemptOnCpu(cpu.getOnCpu());
+                    cpu.nextProcessToCpuPreempt();
                 }
-
+            } else {
+                if (cpu.idle()) {
+                    cpu.nextProcessToCpuIfIdle();
+                }
             }
-            cpu.sendToCpuIfEmpty(process);
-            //while (!cpu.cpuTick()) {
-//
-//            }
         }
-        this.processesExecuted = true;
+
+        totalExecutionTime = cpu.getTime();
+        processesExecuted = true;
     }
 
     /**
@@ -90,6 +77,6 @@ public class RR implements SchedulerInterface {
         if (!processesExecuted) {
             throw new Exception("Must complete processes before generating metrics");
         }
-        return new PerformanceMetricGenerator("Multilevel Feedback Queue", processes,cpu);
+        return new PerformanceMetricGenerator("Round Robin", processes, cpu);
     }
 }
