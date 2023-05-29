@@ -20,7 +20,7 @@ public class Main {
         // SHORTEST JOB FIRST (NON PREEMPTIVE)
         SJF sjf = new SJF();
         sjf.loadProcesses(processes);
-        sjf.executeProcesses(false);
+        sjf.executeProcesses(true);
         PerformanceMetricGenerator sjfPMG = sjf.generatePerformanceMetrics();
         populateData(dataForCSV, 0, sjfPMG);
         PrintStream ps = new PrintStream("sjfNonPreemptiveFinalData.txt");
@@ -48,7 +48,7 @@ public class Main {
         // ROUND ROBIN
         RR rr = new RR();
         rr.loadProcesses(processes);
-        rr.executeProcesses(false);
+        rr.executeProcesses(true);
         PerformanceMetricGenerator rrPMG = rr.generatePerformanceMetrics();
         populateData(dataForCSV, 2, rrPMG);
         ps = new PrintStream("rrFinalData.txt");
@@ -91,7 +91,7 @@ public class Main {
         // PRIORITY
         Priority pri = new Priority();
         pri.loadProcesses(processes);
-        pri.executeProcesses(false);
+        pri.executeProcesses(true);
         PerformanceMetricGenerator priPMG = pri.generatePerformanceMetrics();
         populateData(dataForCSV, 5, priPMG);
         ps = new PrintStream("priorityFinalData.txt");
@@ -106,7 +106,7 @@ public class Main {
         //FIRST-COME FIRST SERVED
         FCFS fcfs = new FCFS();
         fcfs.loadProcesses(processes);
-        fcfs.executeProcesses(false);
+        fcfs.executeProcesses(true);
         PerformanceMetricGenerator fcfsPMG = fcfs.generatePerformanceMetrics();
         populateData(dataForCSV, 6, fcfsPMG);
         ps = new PrintStream("fcfsFinalData.txt");
