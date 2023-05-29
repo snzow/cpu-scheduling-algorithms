@@ -9,6 +9,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b51e607-7950-479a-8cd0-2e296af43b14" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/output/avgResp.csv" beforeDir="false" afterPath="$PROJECT_DIR$/report/output/avgResp.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/output/avgTurn.csv" beforeDir="false" afterPath="$PROJECT_DIR$/report/output/avgTurn.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/report/output/avgWait.csv" beforeDir="false" afterPath="$PROJECT_DIR$/report/output/avgWait.csv" afterDir="false" />
